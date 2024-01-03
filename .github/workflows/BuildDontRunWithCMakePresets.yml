@@ -96,9 +96,9 @@ jobs:
 
     - name: Install SDL (Linux/Mac)
       run: |
-        if ${{matrix.os == 'ubuntu-latest'}} ; then
+        if [[ ${{matrix.os == 'ubuntu-latest'}} ]]; then
           sudo apt-get install libsdl2-dev
-        elif ${{matrix.os == 'macos-latest'}} ; then
+        elif [[ ${{matrix.os == 'macos-latest'}} ]]; then
           brew install sdl2
         fi
 
@@ -111,12 +111,12 @@ jobs:
     - name: Show location of installed SDL
       shell: bash
       run: |
-        if ${{matrix.os == 'ubuntu-latest'}} || ${{matrix.os == 'macos-latest'}} ; then
+        if [[ ${{matrix.os == 'ubuntu-latest'}} || ${{matrix.os == 'macos-latest'}} ]]; then
           find /usr -iname SDL.h
           find /usr -iname libSDL2.a
           find /usr -iname libSDL2.so
           find /usr -iname SDL2*Config.cmake
-        elif ${{matrix.os == 'windows-latest'}} ; then
+        elif [[ ${{matrix.os == 'windows-latest'}} ]]; then
           find C:\SDL2 -iname SDL.h
           find C:\SDL2 -iname libSDL2.a
           find C:\SDL2 -iname libSDL2.so
@@ -228,9 +228,9 @@ jobs:
 
     - name: Install SDL (Linux/Mac)
       run: |
-        if ${{matrix.os == 'ubuntu-latest'}} ; then
+        if [[ ${{matrix.os == 'ubuntu-latest'}} ]]; then
           sudo apt-get install libsdl2-dev
-        elif ${{matrix.os == 'macos-latest'}} ; then
+        elif [[ ${{matrix.os == 'macos-latest'}} ]]; then
           brew install sdl2
         fi
 
@@ -243,12 +243,12 @@ jobs:
     - name: Show location of installed SDL
       shell: bash
       run: |
-        if ${{matrix.os == 'ubuntu-latest'}} || ${{matrix.os == 'macos-latest'}} ; then
+        if [[ ${{matrix.os == 'ubuntu-latest'}} || ${{matrix.os == 'macos-latest'}} ]]; then
           find /usr -iname SDL.h
           find /usr -iname libSDL2.a
           find /usr -iname libSDL2.so
           find /usr -iname SDL2*Config.cmake
-        elif ${{matrix.os == 'windows-latest'}} ; then
+        elif [[ ${{matrix.os == 'windows-latest'}} ]]; then
           find C:\SDL2 -iname SDL.h
           find C:\SDL2 -iname libSDL2.a
           find C:\SDL2 -iname libSDL2.so
