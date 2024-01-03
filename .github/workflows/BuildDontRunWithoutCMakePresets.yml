@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [master, develop]
 
-env:
-  projectName: SDLOpenGL
-
 jobs:
   singleConfig:
     strategy:
@@ -82,34 +79,44 @@ jobs:
         echo cl
         cl
 
-    - name: Install SDL (Linux/Mac)
-      run: |
-        if [[ ${{matrix.os == 'ubuntu-latest'}} ]]; then
-          sudo apt-get install libsdl2-dev
-        elif [[ ${{matrix.os == 'macos-latest'}} ]]; then
-          brew install sdl2
-        fi
+    - name: Install SDL Linux
+      if: ${{matrix.os == 'ubuntu-latest'}}
+      run: sudo apt-get install libsdl2-dev
 
-    - name: Install SDL (Windows)
+    - name: Install SDL Macos
+      if: ${{matrix.os == 'macos-latest'}}
+      run: brew install sdl2
+
+    - name: Install SDL Windows
       if: ${{matrix.os == 'windows-latest'}}
       run: |
         Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
         Expand-Archive C:\SDL.zip -DestinationPath C:\SDL2
 
-    - name: Show location of installed SDL
-      shell: bash
+    - name: Where is SDL Linux
+      if: ${{matrix.os == 'ubuntu-latest'}}
       run: |
-        if [[ ${{matrix.os == 'ubuntu-latest'}} || ${{matrix.os == 'macos-latest'}} ]]; then
-          find /usr -iname SDL.h
-          find /usr -iname libSDL2.a
-          find /usr -iname libSDL2.so
-          find /usr -iname SDL2*Config.cmake
-        elif [[ ${{matrix.os == 'windows-latest'}} ]]; then
-          find C:\SDL2 -iname SDL.h
-          find C:\SDL2 -iname libSDL2.a
-          find C:\SDL2 -iname libSDL2.so
-          find C:\SDL2 -iname SDL2*Config.cmake
-        fi
+        find ${{github.workspace}} -iname SDL.h
+        find ${{github.workspace}} -iname libSDL*
+        find ${{github.workspace}} -iname SDL*Config.cmake
+        find /usr -iname SDL.h
+        find /usr -iname libSDL*
+        find /usr -iname SDL*Config.cmake
+
+    - name: Where is SDL MacOS
+      if: ${{matrix.os == 'macos-latest'}}
+      run: |
+        find /usr/local/Cellar/sdl2 -iname SDL.h
+        find /usr/local/Cellar/sdl2 -iname libSDL*
+        find /usr/local/Cellar/sdl2 -iname SDL*Config.cmake
+
+    - name: Where is SDL Windows
+      if: ${{matrix.os == 'windows-latest'}}
+      shell: powershell
+      run: |
+        ls C:\SDL2 -Include SDL.h -Recurse -Name
+        ls C:\SDL2 -Include *SDL*.dll -Recurse -Name
+        ls C:\SDL2 -Include SDL*Config.cmake -Recurse -Name
 
     - name: Tool versions
       shell: bash
@@ -158,7 +165,7 @@ jobs:
     - name: Archive build artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: Binaries_${{env.projectName}}_${{runner.os}}_${{matrix.generator.buildDir}}_${{matrix.compilerCpp.buildSubDir}}
+        name: Binaries_ImGuiImPlotGraphs_${{runner.os}}_${{matrix.generator.buildDir}}_${{matrix.compilerCpp.buildSubDir}}
         path: ${{matrix.generator.buildDir}}/${{matrix.compilerCpp.buildSubDir}}/buildOut
 
   multiConfig:
@@ -228,34 +235,44 @@ jobs:
         echo cl
         cl
 
-    - name: Install SDL (Linux/Mac)
-      run: |
-        if [[ ${{matrix.os == 'ubuntu-latest'}} ]]; then
-          sudo apt-get install libsdl2-dev
-        elif [[ ${{matrix.os == 'macos-latest'}} ]]; then
-          brew install sdl2
-        fi
+    - name: Install SDL Linux
+      if: ${{matrix.os == 'ubuntu-latest'}}
+      run: sudo apt-get install libsdl2-dev
 
-    - name: Install SDL (Windows)
+    - name: Install SDL Macos
+      if: ${{matrix.os == 'macos-latest'}}
+      run: brew install sdl2
+
+    - name: Install SDL Windows
       if: ${{matrix.os == 'windows-latest'}}
       run: |
         Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
         Expand-Archive C:\SDL.zip -DestinationPath C:\SDL2
 
-    - name: Show location of installed SDL
-      shell: bash
+    - name: Where is SDL Linux
+      if: ${{matrix.os == 'ubuntu-latest'}}
       run: |
-        if [[ ${{matrix.os == 'ubuntu-latest'}} || ${{matrix.os == 'macos-latest'}} ]]; then
-          find /usr -iname SDL.h
-          find /usr -iname libSDL2.a
-          find /usr -iname libSDL2.so
-          find /usr -iname SDL2*Config.cmake
-        elif [[ ${{matrix.os == 'windows-latest'}} ]]; then
-          find C:\SDL2 -iname SDL.h
-          find C:\SDL2 -iname libSDL2.a
-          find C:\SDL2 -iname libSDL2.so
-          find C:\SDL2 -iname SDL2*Config.cmake
-        fi
+        find ${{github.workspace}} -iname SDL.h
+        find ${{github.workspace}} -iname libSDL*
+        find ${{github.workspace}} -iname SDL*Config.cmake
+        find /usr -iname SDL.h
+        find /usr -iname libSDL*
+        find /usr -iname SDL*Config.cmake
+
+    - name: Where is SDL MacOS
+      if: ${{matrix.os == 'macos-latest'}}
+      run: |
+        find /usr/local/Cellar/sdl2 -iname SDL.h
+        find /usr/local/Cellar/sdl2 -iname libSDL*
+        find /usr/local/Cellar/sdl2 -iname SDL*Config.cmake
+
+    - name: Where is SDL Windows
+      if: ${{matrix.os == 'windows-latest'}}
+      shell: powershell
+      run: |
+        ls C:\SDL2 -Include SDL.h -Recurse -Name
+        ls C:\SDL2 -Include *SDL*.dll -Recurse -Name
+        ls C:\SDL2 -Include SDL*Config.cmake -Recurse -Name
 
     - name: Tool versions
       shell: bash
@@ -313,7 +330,7 @@ jobs:
     - name: Archive build artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: Binaries_${{env.projectName}}_${{runner.os}}_${{matrix.generator.buildDir}}_${{matrix.compilerCpp.buildSubDir}}
+        name: Binaries_ImGuiImPlotGraphs_${{runner.os}}_${{matrix.generator.buildDir}}_${{matrix.compilerCpp.buildSubDir}}
         path: ${{matrix.generator.buildDir}}/${{matrix.compilerCpp.buildSubDir}}/buildOut
 
 
@@ -353,34 +370,44 @@ jobs:
         echo cl
         cl
 
-    - name: Install SDL (Linux/Mac)
-      run: |
-        if [[ ${{matrix.os == 'ubuntu-latest'}} ]]; then
-          sudo apt-get install libsdl2-dev
-        elif [[ ${{matrix.os == 'macos-latest'}} ]]; then
-          brew install sdl2
-        fi
+    - name: Install SDL Linux
+      if: ${{matrix.os == 'ubuntu-latest'}}
+      run: sudo apt-get install libsdl2-dev
 
-    - name: Install SDL (Windows)
+    - name: Install SDL Macos
+      if: ${{matrix.os == 'macos-latest'}}
+      run: brew install sdl2
+
+    - name: Install SDL Windows
       if: ${{matrix.os == 'windows-latest'}}
       run: |
         Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
         Expand-Archive C:\SDL.zip -DestinationPath C:\SDL2
 
-    - name: Show location of installed SDL
-      shell: bash
+    - name: Where is SDL Linux
+      if: ${{matrix.os == 'ubuntu-latest'}}
       run: |
-        if [[ ${{matrix.os == 'ubuntu-latest'}} || ${{matrix.os == 'macos-latest'}} ]]; then
-          find /usr -iname SDL.h
-          find /usr -iname libSDL2.a
-          find /usr -iname libSDL2.so
-          find /usr -iname SDL2*Config.cmake
-        elif [[ ${{matrix.os == 'windows-latest'}} ]]; then
-          find C:\SDL2 -iname SDL.h
-          find C:\SDL2 -iname libSDL2.a
-          find C:\SDL2 -iname libSDL2.so
-          find C:\SDL2 -iname SDL2*Config.cmake
-        fi
+        find ${{github.workspace}} -iname SDL.h
+        find ${{github.workspace}} -iname libSDL*
+        find ${{github.workspace}} -iname SDL*Config.cmake
+        find /usr -iname SDL.h
+        find /usr -iname libSDL*
+        find /usr -iname SDL*Config.cmake
+
+    - name: Where is SDL MacOS
+      if: ${{matrix.os == 'macos-latest'}}
+      run: |
+        find /usr/local/Cellar/sdl2 -iname SDL.h
+        find /usr/local/Cellar/sdl2 -iname libSDL*
+        find /usr/local/Cellar/sdl2 -iname SDL*Config.cmake
+
+    - name: Where is SDL Windows
+      if: ${{matrix.os == 'windows-latest'}}
+      shell: powershell
+      run: |
+        ls C:\SDL2 -Include SDL.h -Recurse -Name
+        ls C:\SDL2 -Include *SDL*.dll -Recurse -Name
+        ls C:\SDL2 -Include SDL*Config.cmake -Recurse -Name
 
     - name: Tool versions
       shell: bash
@@ -422,5 +449,5 @@ jobs:
     - name: Archive build artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: Binaries_${{env.projectName}}_${{runner.os}}_${{matrix.generator.buildDir}}_${{matrix.architecture.buildSubDir}}_${{matrix.compilerCpp.buildSubDir}}
+        name: Binaries_ImGuiImPlotGraphs_${{runner.os}}_${{matrix.generator.buildDir}}_${{matrix.architecture.buildSubDir}}_${{matrix.compilerCpp.buildSubDir}}
         path: ${{matrix.generator.buildDir}}/${{matrix.architecture.buildSubDir}}/${{matrix.compilerCpp.buildSubDir}}/buildOut
