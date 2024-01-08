@@ -1,0 +1,97 @@
+name: Learn Github actions cache
+
+on:
+  push: 
+    branches: [master, develop]
+  pull_request:
+    branches: [master, develop]
+
+jobs:
+
+  build-on-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Cache SDL2 (Linux)
+      id: cache-${{runner.os}}-sdl2
+      uses: actions/cache@v3
+      with:
+        path: |
+          /usr/lib/x86_64-linux-gnu
+          /usr/include/SDL2
+        key: SDL2-${{runner.os}}-${{matrix.preset}}-${{github.run_number}}-${{github.run_attempt}}
+
+    - name: Install SDL2 if it hasn't been cached yet (Linux)
+      if: ${{ cache-${{runner.os}}-sdl2.outputs.cache-hit != 'true' }}
+      run: |
+          echo sudo apt-get install libsdl2-dev
+          sudo apt-get install libsdl2-dev
+
+    - name: Location of installed SDL2 (Linux)
+      run: |
+          find /usr -iname SDL.h
+          find /usr -iname libSDL2.a
+          find /usr -iname libSDL2.so
+          find /usr -iname SDL2?Config.cmake
+          echo 
+          ls /usr/lib/x86_64-linux-gnu
+          ls /usr/include/SDL2
+
+
+  build-on-macos:
+    runs-on: macos-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Cache SDL2 (Mac)
+      id: cache-${{runner.os}}-sdl2
+      uses: actions/cache@v3
+      with:
+        path: |
+          /usr/local/Cellar/sdl2
+        key: SDL2-${{runner.os}}-${{matrix.preset}}-${{github.run_number}}-${{github.run_attempt}}
+
+    - name: Install SDL2 if it hasn't been cached yet (Mac)
+      if: ${{ cache-${{runner.os}}-sdl2.outputs.cache-hit != 'true' }}
+      run: |
+          echo brew install sdl2
+          brew install sdl2
+
+    - name: Location of installed SDL2 (Linux)
+      run: |
+          find /usr/local/Cellar/sdl2 -iname SDL.h
+          find /usr/local/Cellar/sdl2 -iname libSDL2.a
+          find /usr/local/Cellar/sdl2 -iname libSDL2.so
+          find /usr/local/Cellar/sdl2 -iname SDL2?Config.cmake
+
+
+  build-on-windows:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Cache SDL2 (Windows)
+      id: cache-${{runner.os}}-sdl2
+      uses: actions/cache@v3
+      with:
+        path: |
+          C:\SDL2
+        key: SDL2-${{runner.os}}-${{matrix.preset}}-${{github.run_number}}-${{github.run_attempt}}
+
+    - name: Install SDL2 if it hasn't been cached yet (Windows)
+      if: ${{ cache-${{runner.os}}-sdl2.outputs.cache-hit != 'true' }}
+      run: |
+        Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
+        Expand-Archive C:\SDL.zip -DestinationPath C:\SDL2
+
+    - name: Location of installed SDL2 (Windows)
+      shell: powershell
+      run: |
+        ls C:\SDL2 -Include SDL.h -Recurse -Name
+        ls C:\SDL2 -Include SDL2.lib -Recurse -Name
+        ls C:\SDL2 -Include SDL2.dll -Recurse -Name
+        ls C:\SDL2 -Include SDL2?Config.cmake -Recurse -Name
