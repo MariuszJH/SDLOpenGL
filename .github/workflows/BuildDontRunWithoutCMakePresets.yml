@@ -73,36 +73,8 @@ jobs:
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@master
 
-    - name: Cache SDL2 (Linux)
-      if: ${{matrix.os == 'ubuntu-latest'}}
-      id: cache-${{runner.os}}-sdl2
-      uses: actions/cache@v3
-      with:
-        path: |
-          /usr/lib/x86_64-linux-gnu
-          /usr/include/SDL2
-        key: SDL2-${{runner.os}}-${{matrix.preset}}-${{github.run_number}}-${{github.run_attempt}}
-
-    - name: Cache SDL2 (Mac)
-      if: ${{matrix.os == 'macos-latest'}}
-      id: cache-${{runner.os}}-sdl2
-      uses: actions/cache@v3
-      with:
-        path: |
-          /usr/local/Cellar/sdl2
-        key: SDL2-${{runner.os}}-${{matrix.preset}}-${{github.run_number}}-${{github.run_attempt}}
-
-    - name: Cache SDL2 (Windows)
-      if: ${{matrix.os == 'windows-latest'}}
-      id: cache-${{runner.os}}-sdl2
-      uses: actions/cache@v3
-      with:
-        path: |
-          C:\SDL2
-        key: SDL2-${{runner.os}}-${{matrix.preset}}-${{github.run_number}}-${{github.run_attempt}}
-
-    - name: Install SDL2 if it hasn't been cached yet (Linux/Mac)
-      if: ${{ (matrix.os != 'windows-latest') && (cache-${{runner.os}}-sdl2.outputs.cache-hit != 'true') }}
+    - name: Install SDL2 (Linux/Mac)
+      if: ${{matrix.os != 'windows-latest'}}
       shell: bash
       run: |
         if [[ ${{matrix.os == 'ubuntu-latest'}} == "true" ]]; then
@@ -113,8 +85,8 @@ jobs:
           brew install sdl2
         fi
 
-    - name: Install SDL2 if it hasn't been cached yet (Windows)
-      if: ${{ (matrix.os == 'windows-latest') && (cache-${{runner.os}}-sdl2.outputs.cache-hit != 'true') }}
+    - name: Install SDL2 (Windows)
+      if: ${{matrix.os == 'windows-latest'}}
       run: |
         Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
         Expand-Archive C:\SDL.zip -DestinationPath C:\SDL2
@@ -259,36 +231,8 @@ jobs:
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@master
 
-    - name: Cache SDL2 (Linux)
-      if: ${{matrix.os == 'ubuntu-latest'}}
-      id: cache-${{runner.os}}-sdl2
-      uses: actions/cache@v3
-      with:
-        path: |
-          /usr/lib/x86_64-linux-gnu
-          /usr/include/SDL2
-        key: SDL2-${{runner.os}}-${{matrix.preset}}-${{github.run_number}}-${{github.run_attempt}}
-
-    - name: Cache SDL2 (Mac)
-      if: ${{matrix.os == 'macos-latest'}}
-      id: cache-${{runner.os}}-sdl2
-      uses: actions/cache@v3
-      with:
-        path: |
-          /usr/local/Cellar/sdl2
-        key: SDL2-${{runner.os}}-${{matrix.preset}}-${{github.run_number}}-${{github.run_attempt}}
-
-    - name: Cache SDL2 (Windows)
-      if: ${{matrix.os == 'windows-latest'}}
-      id: cache-${{runner.os}}-sdl2
-      uses: actions/cache@v3
-      with:
-        path: |
-          C:\SDL2
-        key: SDL2-${{runner.os}}-${{matrix.preset}}-${{github.run_number}}-${{github.run_attempt}}
-
-    - name: Install SDL2 if it hasn't been cached yet (Linux/Mac)
-      if: ${{ (matrix.os != 'windows-latest') && (cache-${{runner.os}}-sdl2.outputs.cache-hit != 'true') }}
+    - name: Install SDL2 (Linux/Mac)
+      if: ${{matrix.os != 'windows-latest'}}
       shell: bash
       run: |
         if [[ ${{matrix.os == 'ubuntu-latest'}} == "true" ]]; then
@@ -299,8 +243,8 @@ jobs:
           brew install sdl2
         fi
 
-    - name: Install SDL2 if it hasn't been cached yet (Windows)
-      if: ${{ (matrix.os == 'windows-latest') && (cache-${{runner.os}}-sdl2.outputs.cache-hit != 'true') }}
+    - name: Install SDL2 (Windows)
+      if: ${{matrix.os == 'windows-latest'}}
       run: |
         Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
         Expand-Archive C:\SDL.zip -DestinationPath C:\SDL2
@@ -429,36 +373,8 @@ jobs:
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@master
 
-    - name: Cache SDL2 (Linux)
-      if: ${{matrix.os == 'ubuntu-latest'}}
-      id: cache-${{runner.os}}-sdl2
-      uses: actions/cache@v3
-      with:
-        path: |
-          /usr/lib/x86_64-linux-gnu
-          /usr/include/SDL2
-        key: SDL2-${{runner.os}}-${{matrix.preset}}-${{github.run_number}}-${{github.run_attempt}}
-
-    - name: Cache SDL2 (Mac)
-      if: ${{matrix.os == 'macos-latest'}}
-      id: cache-${{runner.os}}-sdl2
-      uses: actions/cache@v3
-      with:
-        path: |
-          /usr/local/Cellar/sdl2
-        key: SDL2-${{runner.os}}-${{matrix.preset}}-${{github.run_number}}-${{github.run_attempt}}
-
-    - name: Cache SDL2 (Windows)
-      if: ${{matrix.os == 'windows-latest'}}
-      id: cache-${{runner.os}}-sdl2
-      uses: actions/cache@v3
-      with:
-        path: |
-          C:\SDL2
-        key: SDL2-${{runner.os}}-${{matrix.preset}}-${{github.run_number}}-${{github.run_attempt}}
-
-    - name: Install SDL2 if it hasn't been cached yet (Linux/Mac)
-      if: ${{ (matrix.os != 'windows-latest') && (cache-${{runner.os}}-sdl2.outputs.cache-hit != 'true') }}
+    - name: Install SDL2 (Linux/Mac)
+      if: ${{matrix.os != 'windows-latest'}}
       shell: bash
       run: |
         if [[ ${{matrix.os == 'ubuntu-latest'}} == "true" ]]; then
@@ -469,8 +385,8 @@ jobs:
           brew install sdl2
         fi
 
-    - name: Install SDL2 if it hasn't been cached yet (Windows)
-      if: ${{ (matrix.os == 'windows-latest') && (cache-${{runner.os}}-sdl2.outputs.cache-hit != 'true') }}
+    - name: Install SDL2 (Windows)
+      if: ${{matrix.os == 'windows-latest'}}
       run: |
         Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
         Expand-Archive C:\SDL.zip -DestinationPath C:\SDL2
