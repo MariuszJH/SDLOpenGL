@@ -76,23 +76,13 @@ jobs:
     - name: Install SDL2 (Linux/Mac)
       if: ${{matrix.os != 'windows-latest'}}
       shell: bash
-      run:   |
+      run: |
         if [[ ${{matrix.os == 'ubuntu-latest'}} == "true" ]]; then
           echo sudo apt-get install libsdl2-dev
           sudo apt-get install libsdl2-dev
-          echo 
-          find /usr -iname SDL.h
-          find /usr -iname libSDL2.a
-          find /usr -iname libSDL2.so
-          find /usr -iname SDL2?Config.cmake
         elif [[ ${{matrix.os == 'macos-latest'}} == "true" ]]; then
           echo brew install sdl2
           brew install sdl2
-          echo 
-          find /usr/local/Cellar/sdl2 -iname SDL.h
-          find /usr/local/Cellar/sdl2 -iname libSDL2.a
-          find /usr/local/Cellar/sdl2 -iname libSDL2.so
-          find /usr/local/Cellar/sdl2 -iname SDL2?Config.cmake
         fi
 
     - name: Install SDL2 (Windows)
@@ -100,7 +90,26 @@ jobs:
       run: |
         Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
         Expand-Archive C:\SDL.zip -DestinationPath C:\SDL2
-        Write-Host ""
+
+    - name: Location of installed SDL2 (Linux/Mac)
+      if: ${{matrix.os != 'windows-latest'}}
+      run: |
+        if [[ ${{matrix.os == 'ubuntu-latest'}} == "true" ]]; then
+          find /usr -iname SDL.h
+          find /usr -iname libSDL2.a
+          find /usr -iname libSDL2.so
+          find /usr -iname SDL2?Config.cmake
+        elif [[ ${{matrix.os == 'macos-latest'}} == "true" ]]; then
+          find /usr/local/Cellar/sdl2 -iname SDL.h
+          find /usr/local/Cellar/sdl2 -iname libSDL2.a
+          find /usr/local/Cellar/sdl2 -iname libSDL2.so
+          find /usr/local/Cellar/sdl2 -iname SDL2?Config.cmake
+        fi
+
+    - name: Location of installed SDL2 (Windows)
+      if: ${{matrix.os == 'windows-latest'}}
+      shell: powershell
+      run: |
         ls C:\SDL2 -Include SDL.h -Recurse -Name
         ls C:\SDL2 -Include SDL2.lib -Recurse -Name
         ls C:\SDL2 -Include SDL2.dll -Recurse -Name
@@ -108,7 +117,7 @@ jobs:
 
     - name: Tool versions
       shell: bash
-      run:   |
+      run: |
         if [[ ${{matrix.os == 'windows-latest'}} == "true" ]]; then
           echo cl
           cl
@@ -225,23 +234,13 @@ jobs:
     - name: Install SDL2 (Linux/Mac)
       if: ${{matrix.os != 'windows-latest'}}
       shell: bash
-      run:   |
+      run: |
         if [[ ${{matrix.os == 'ubuntu-latest'}} == "true" ]]; then
           echo sudo apt-get install libsdl2-dev
           sudo apt-get install libsdl2-dev
-          echo 
-          find /usr -iname SDL.h
-          find /usr -iname libSDL2.a
-          find /usr -iname libSDL2.so
-          find /usr -iname SDL2?Config.cmake
         elif [[ ${{matrix.os == 'macos-latest'}} == "true" ]]; then
           echo brew install sdl2
           brew install sdl2
-          echo 
-          find /usr/local/Cellar/sdl2 -iname SDL.h
-          find /usr/local/Cellar/sdl2 -iname libSDL2.a
-          find /usr/local/Cellar/sdl2 -iname libSDL2.so
-          find /usr/local/Cellar/sdl2 -iname SDL2?Config.cmake
         fi
 
     - name: Install SDL2 (Windows)
@@ -249,7 +248,26 @@ jobs:
       run: |
         Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
         Expand-Archive C:\SDL.zip -DestinationPath C:\SDL2
-        Write-Host ""
+
+    - name: Location of installed SDL2 (Linux/Mac)
+      if: ${{matrix.os != 'windows-latest'}}
+      run: |
+        if [[ ${{matrix.os == 'ubuntu-latest'}} == "true" ]]; then
+          find /usr -iname SDL.h
+          find /usr -iname libSDL2.a
+          find /usr -iname libSDL2.so
+          find /usr -iname SDL2?Config.cmake
+        elif [[ ${{matrix.os == 'macos-latest'}} == "true" ]]; then
+          find /usr/local/Cellar/sdl2 -iname SDL.h
+          find /usr/local/Cellar/sdl2 -iname libSDL2.a
+          find /usr/local/Cellar/sdl2 -iname libSDL2.so
+          find /usr/local/Cellar/sdl2 -iname SDL2?Config.cmake
+        fi
+
+    - name: Location of installed SDL2 (Windows)
+      if: ${{matrix.os == 'windows-latest'}}
+      shell: powershell
+      run: |
         ls C:\SDL2 -Include SDL.h -Recurse -Name
         ls C:\SDL2 -Include SDL2.lib -Recurse -Name
         ls C:\SDL2 -Include SDL2.dll -Recurse -Name
@@ -257,7 +275,7 @@ jobs:
 
     - name: Tool versions
       shell: bash
-      run:   |
+      run: |
         if [[ ${{matrix.os == 'windows-latest'}} == "true" ]]; then
           echo cl
           cl
@@ -358,23 +376,13 @@ jobs:
     - name: Install SDL2 (Linux/Mac)
       if: ${{matrix.os != 'windows-latest'}}
       shell: bash
-      run:   |
+      run: |
         if [[ ${{matrix.os == 'ubuntu-latest'}} == "true" ]]; then
           echo sudo apt-get install libsdl2-dev
           sudo apt-get install libsdl2-dev
-          echo 
-          find /usr -iname SDL.h
-          find /usr -iname libSDL2.a
-          find /usr -iname libSDL2.so
-          find /usr -iname SDL2?Config.cmake
         elif [[ ${{matrix.os == 'macos-latest'}} == "true" ]]; then
           echo brew install sdl2
           brew install sdl2
-          echo 
-          find /usr/local/Cellar/sdl2 -iname SDL.h
-          find /usr/local/Cellar/sdl2 -iname libSDL2.a
-          find /usr/local/Cellar/sdl2 -iname libSDL2.so
-          find /usr/local/Cellar/sdl2 -iname SDL2?Config.cmake
         fi
 
     - name: Install SDL2 (Windows)
@@ -382,7 +390,26 @@ jobs:
       run: |
         Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
         Expand-Archive C:\SDL.zip -DestinationPath C:\SDL2
-        Write-Host ""
+
+    - name: Location of installed SDL2 (Linux/Mac)
+      if: ${{matrix.os != 'windows-latest'}}
+      run: |
+        if [[ ${{matrix.os == 'ubuntu-latest'}} == "true" ]]; then
+          find /usr -iname SDL.h
+          find /usr -iname libSDL2.a
+          find /usr -iname libSDL2.so
+          find /usr -iname SDL2?Config.cmake
+        elif [[ ${{matrix.os == 'macos-latest'}} == "true" ]]; then
+          find /usr/local/Cellar/sdl2 -iname SDL.h
+          find /usr/local/Cellar/sdl2 -iname libSDL2.a
+          find /usr/local/Cellar/sdl2 -iname libSDL2.so
+          find /usr/local/Cellar/sdl2 -iname SDL2?Config.cmake
+        fi
+
+    - name: Location of installed SDL2 (Windows)
+      if: ${{matrix.os == 'windows-latest'}}
+      shell: powershell
+      run: |
         ls C:\SDL2 -Include SDL.h -Recurse -Name
         ls C:\SDL2 -Include SDL2.lib -Recurse -Name
         ls C:\SDL2 -Include SDL2.dll -Recurse -Name
@@ -390,7 +417,7 @@ jobs:
 
     - name: Tool versions
       shell: bash
-      run:   |
+      run: |
         if [[ ${{matrix.os == 'windows-latest'}} == "true" ]]; then
           echo cl
           cl
