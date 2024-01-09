@@ -52,7 +52,7 @@ jobs:
       with:
         path: |
           /usr/local/Cellar/sdl2
-        key: SDL2-macos-preset-${{github.run_number}}-${{github.run_attempt}}
+        key: SDL2-macos-preset
 
     - name: Install SDL2 if it hasn't been cached yet (Mac)
       if: cache-macos-sdl2.outputs.cache-hit != 'true'
