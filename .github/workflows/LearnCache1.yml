@@ -38,6 +38,7 @@ jobs:
           find /usr -iname libSDL2.a
           find /usr -iname libSDL2.so
           find /usr -iname SDL2?Config.cmake
+          ls /usr
 
 
   build-on-macos:
