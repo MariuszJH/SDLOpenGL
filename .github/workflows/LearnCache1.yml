@@ -21,10 +21,10 @@ jobs:
         path: |
           /usr/lib/x86_64-linux-gnu
           /usr/include/SDL2
-        key: SDL2-ubuntu-preset-${{github.run_number}}-${{github.run_attempt}}
-
+        key: SDL2-ubuntu-preset
+        
     - name: Install SDL2 if it hasn't been cached yet (Linux)
-      if: ${{ cache-ubuntu-sdl2.outputs.cache-hit != 'true' }}
+      if: cache-ubuntu-sdl2.outputs.cache-hit != 'true'
       run: |
           echo sudo apt-get install libsdl2-dev
           sudo apt-get install libsdl2-dev
@@ -55,7 +55,7 @@ jobs:
         key: SDL2-macos-preset-${{github.run_number}}-${{github.run_attempt}}
 
     - name: Install SDL2 if it hasn't been cached yet (Mac)
-      if: ${{ cache-macos-sdl2.outputs.cache-hit != 'true' }}
+      if: cache-macos-sdl2.outputs.cache-hit != 'true'
       run: |
           echo brew install sdl2
           brew install sdl2
@@ -83,7 +83,7 @@ jobs:
         key: SDL2-windows-preset-${{github.run_number}}-${{github.run_attempt}}
 
     - name: Install SDL2 if it hasn't been cached yet (Windows)
-      if: ${{ cache-windows-sdl2.outputs.cache-hit != 'true' }}
+      if: cache-windows-sdl2.outputs.cache-hit != 'true'
       run: |
         Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
         Expand-Archive C:\SDL.zip -DestinationPath C:\SDL2
