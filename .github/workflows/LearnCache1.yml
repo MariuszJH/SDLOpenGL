@@ -9,7 +9,7 @@ on:
 env:
   projectName: SDLOpenGL
   SDL_VERSION: 2.28.5
-  
+
 jobs:
 
   build-on-ubuntu:
@@ -23,8 +23,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: |
-          /usr/lib/x86_64-linux-gnu
-          /usr/include/SDL2
+          /usr
         key: SDL2-ubuntu-preset
         
     - name: Install SDL2 if it hasn't been cached yet (Linux)
