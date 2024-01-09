@@ -24,7 +24,7 @@ jobs:
       with:
         path: |
           /usr/include/SDL2/*
-          /usr/lib/x86_64-linux-gnu/*
+          /usr/lib/x86_64-linux-gnu/libSDL*
         key: SDL2-ubuntu-preset
         
     - name: Install SDL2 if it hasn't been cached yet (Linux)
