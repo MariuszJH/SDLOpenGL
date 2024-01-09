@@ -35,9 +35,6 @@ jobs:
           find /usr -iname libSDL2.a
           find /usr -iname libSDL2.so
           find /usr -iname SDL2?Config.cmake
-          echo 
-          ls /usr/lib/x86_64-linux-gnu
-          ls /usr/include/SDL2
 
 
   build-on-macos:
@@ -84,6 +81,7 @@ jobs:
 
     - name: Install SDL2 if it hasn't been cached yet (Windows)
       if: steps.cache-windows-sdl2.outputs.cache-hit != 'true'
+      shell: powershell
       run: |
         Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
         Expand-Archive C:\SDL.zip -DestinationPath C:\SDL2
