@@ -23,8 +23,8 @@ jobs:
       uses: actions/cache@v3
       with:
         path: |
-          /usr/include/SLD2
-          /usr/lib/x86_64-linux-gnu
+          /usr/include/SDL2/*
+          /usr/lib/x86_64-linux-gnu/*
         key: SDL2-ubuntu-preset
         
     - name: Install SDL2 if it hasn't been cached yet (Linux)
@@ -39,7 +39,7 @@ jobs:
           find /usr -iname libSDL2.a
           find /usr -iname libSDL2.so
           find /usr -iname SDL2?Config.cmake
-          ls /usr/include/SLD2
+          ls /usr/include/SDL2
           ls /usr/lib/x86_64-linux-gnu
 
 
@@ -63,12 +63,14 @@ jobs:
           echo brew install sdl2
           brew install sdl2
 
-    - name: Location of installed SDL2 (Linux)
+    - name: Location of installed SDL2 (Mac)
       run: |
           find /usr/local/Cellar/sdl2 -iname SDL.h
           find /usr/local/Cellar/sdl2 -iname libSDL2.a
           find /usr/local/Cellar/sdl2 -iname libSDL2.so
           find /usr/local/Cellar/sdl2 -iname SDL2?Config.cmake
+          ls /usr/local/Cellar/sdl2/2.28.5/include/SDL2
+          ls /usr/local/Cellar/sdl2/2.28.5/lib
 
 
   build-on-windows:
@@ -87,10 +89,14 @@ jobs:
 
     - name: Install SDL2 if it hasn't been cached yet (Windows)
       if: steps.cache-windows-sdl2.outputs.cache-hit != 'true'
-      shell: powershell
+      shell: bash
       run: |
-        Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
-        Expand-Archive C:\SDL.zip -DestinationPath C:\SDL2
+        wget "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -P C:\SDL.zip
+        unzip C:\SDL.zip -d C:\SDL2
+      # shell: powershell
+      # run: |
+        # Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
+        # Expand-Archive C:\SDL.zip -DestinationPath C:\SDL2
 
     - name: Location of installed SDL2 (Windows)
       shell: powershell
