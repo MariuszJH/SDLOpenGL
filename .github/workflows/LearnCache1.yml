@@ -77,7 +77,7 @@ jobs:
       with:
         path: |
           C:\SDL2
-        key: SDL2-windows-preset-${{github.run_number}}-${{github.run_attempt}}
+        key: SDL2-windows-preset
 
     - name: Install SDL2 if it hasn't been cached yet (Windows)
       if: steps.cache-windows-sdl2.outputs.cache-hit != 'true'
