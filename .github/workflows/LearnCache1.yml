@@ -23,7 +23,8 @@ jobs:
       uses: actions/cache@v3
       with:
         path: |
-          /usr
+          /usr/include/SLD2
+          /usr/lib/x86_64-linux-gnu
         key: SDL2-ubuntu-preset
         
     - name: Install SDL2 if it hasn't been cached yet (Linux)
@@ -38,7 +39,8 @@ jobs:
           find /usr -iname libSDL2.a
           find /usr -iname libSDL2.so
           find /usr -iname SDL2?Config.cmake
-          ls /usr/lib
+          ls /usr/include/SLD2
+          ls /usr/lib/x86_64-linux-gnu
 
 
   build-on-macos:
