@@ -16,19 +16,30 @@ jobs:
         path: |
           path/to/dependencies
           some/other/dependencies
-          echo This is step 1
         key: ${{ runner.os }}-primes
+
+    - name: Generate Prime Numbers
+      if: steps.cache-primes.outputs.cache-hit != 'true'
+      run: |
+        mkdir -p path/to/dependencies
+        mkdir -p some/other/dependencies
+        touch path/to/dependencies/dummy1.txt
+        touch some/other/dependencies/dummy2.txt
+        ls path/to/dependencies
+        ls some/other/dependencies
+        echo This is step 1
 
     - name: Save Primes
       id: cache-primes-save
       uses: actions/cache/save@v3
       with:
         path: |
-          mkdir -p path/to/dependencies
-          mkdir -p some/other/dependencies
-          touch path/to/dependencies/dummy1.txt
-          touch some/other/dependencies/dummy2.txt
-          echo This is step 2
           path/to/dependencies
           some/other/dependencies
         key: ${{ steps.cache-primes-restore.outputs.cache-primary-key }}
+
+    - name: Use Prime Numbers
+      run: |
+        ls path/to/dependencies
+        ls some/other/dependencies
+        echo This is step 2
