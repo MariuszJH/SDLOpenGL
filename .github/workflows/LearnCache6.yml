@@ -1,0 +1,38 @@
+name: Caching SDL
+
+on: push
+
+env:
+  projectName: SDLOpenGL
+  SDL_VERSION: 2.28.5
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Cache SDL2
+      id: cache-primes
+      uses: actions/cache@v3
+      with:
+        path: |
+          /usr/include/SDL2
+          /usr/lib/x86_64-linux-gnu/*sdl2*
+        key: ${{ runner.os }}-primes
+
+    - name: Install SDL2
+      if: steps.cache-primes.outputs.cache-hit != 'true'
+      run: |
+        echo sudo apt-get install libsdl2-dev
+        sudo apt-get install libsdl2-dev
+        echo This is step 1
+        ls /usr/include/SDL2
+        ls /usr/lib/x86_64-linux-gnu/*sdl2*
+
+    - name: Use Prime Numbers
+      run: |
+        echo This is step 2
+        ls /usr/include/SDL2
+        ls /usr/lib/x86_64-linux-gnu
