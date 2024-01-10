@@ -26,6 +26,7 @@ jobs:
         touch path/to/dependencies/dummy1.txt
         touch some/other/dependencies/dummy2.txt
         touch some/other/dependencies/dummy3.txt
+        touch some/other/dependencies/funny1.txt
         echo This is step 1
         ls path/to/dependencies
         ls some/other/dependencies
