@@ -1,0 +1,34 @@
+name: Caching Primes 2
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Restore cached Primes
+      id: cache-primes-restore
+      uses: actions/cache/restore@v3
+      with:
+        path: |
+          mkdir -p path/to/dependencies
+          mkdir -p some/other/dependencies
+          touch path/to/dependencies/dummy1.txt
+          touch some/other/dependencies/dummy2.txt
+          echo This is step 1
+          path/to/dependencies
+          some/other/dependencies
+        key: ${{ runner.os }}-primes
+
+    - name: Save Primes
+      id: cache-primes-save
+      uses: actions/cache/save@v3
+      with:
+        path: |
+          path/to/dependencies
+          some/other/dependencies
+          echo This is step 2
+        key: ${{ steps.cache-primes-restore.outputs.cache-primary-key }}
