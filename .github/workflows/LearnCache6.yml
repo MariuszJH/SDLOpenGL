@@ -36,3 +36,4 @@ jobs:
         echo This is step 2
         ls /usr/include/SDL2
         ls /usr/lib/x86_64-linux-gnu
+
