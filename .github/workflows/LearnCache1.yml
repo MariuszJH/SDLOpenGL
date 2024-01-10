@@ -23,7 +23,8 @@ jobs:
       uses: actions/cache@v3
       with:
         path: |
-          sudo /usr/include/SDL2
+          /opt/SDL2
+        # sudo /usr/include/SDL2
         # /usr/lib/x86_64-linux-gnu/libSDL*
         key: SDL2-ubuntu-preset
         
@@ -84,15 +85,15 @@ jobs:
       uses: actions/cache@v3
       with:
         path: |
-          C:\SDL2
+          C:/SDL2
         key: SDL2-windows-preset
 
     - name: Install SDL2 if it hasn't been cached yet (Windows)
       if: steps.cache-windows-sdl2.outputs.cache-hit != 'true'
       shell: bash
       run: |
-        curl "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
-        unzip C:\SDL.zip -d C:\SDL2
+        curl "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:/SDL.zip
+        unzip C://SDL.zip -d C:/SDL2
       # wget "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -P C:\SDL.zip
       # shell: powershell
       # run: |
