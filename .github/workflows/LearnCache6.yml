@@ -29,11 +29,16 @@ jobs:
         sudo apt-get install libsdl2-dev
         echo This is step 1
         ls /usr/include/SDL2
-        ls /usr/lib/x86_64-linux-gnu/*sdl2*
+        ls /usr
+        ls /usr/lib
+        ls /usr/lib/x86_64-linux-gnu
+      # ls /usr/lib/x86_64-linux-gnu/*sdl2*
 
     - name: Use Prime Numbers
       run: |
         echo This is step 2
         ls /usr/include/SDL2
+        ls /usr
+        ls /usr/lib
         ls /usr/lib/x86_64-linux-gnu
-
+        
