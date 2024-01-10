@@ -19,10 +19,13 @@ jobs:
     - name: Generate Prime Numbers
       if: steps.cache-primes.outputs.cache-hit != 'true'
       run: |
+        mkdir prime-numbers
+        touch prime-numbers/dummy1.txt
         echo This is step 1
       # /generate-primes.sh -d prime-numbers
 
     - name: Use Prime Numbers
       run: |
+        ls prime-numbers
         echo This is step 2
       # /primes.sh -d prime-numbers
