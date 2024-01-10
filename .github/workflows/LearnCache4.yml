@@ -14,13 +14,9 @@ jobs:
       uses: actions/cache/restore@v3
       with:
         path: |
-          mkdir -p path/to/dependencies
-          mkdir -p some/other/dependencies
-          touch path/to/dependencies/dummy1.txt
-          touch some/other/dependencies/dummy2.txt
-          echo This is step 1
           path/to/dependencies
           some/other/dependencies
+          echo This is step 1
         key: ${{ runner.os }}-primes
 
     - name: Save Primes
@@ -28,8 +24,12 @@ jobs:
       uses: actions/cache/save@v3
       with:
         path: |
+          mkdir -p path/to/dependencies
+          mkdir -p some/other/dependencies
+          touch path/to/dependencies/dummy1.txt
+          touch some/other/dependencies/dummy2.txt
+          echo This is step 2
           path/to/dependencies
           some/other/dependencies
-          echo This is step 2
         key: ${{ steps.cache-primes-restore.outputs.cache-primary-key }}
 
