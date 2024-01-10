@@ -17,27 +17,25 @@ jobs:
       id: cache-primes
       uses: actions/cache@v3
       with:
-        path: |
-          /usr/include/SDL2
-          /usr/lib/x86_64-linux-gnu/*sdl2*
+        path: ~/SDL2
         key: ${{ runner.os }}-primes
 
     - name: Install SDL2
-      if: steps.cache-primes.outputs.cache-hit != 'true'
       run: |
-        echo sudo apt-get install libsdl2-dev
-        sudo apt-get install libsdl2-dev
-        echo This is step 1
-        ls /usr/include/SDL2
-        ls /usr
-        ls /usr/lib
-        ls /usr/lib/x86_64-linux-gnu
-      # ls /usr/lib/x86_64-linux-gnu/*sdl2*
+        if [[ steps.cache-primes.outputs.cache-hit == 'true' ]]; then
+          sudo cp --verbose --force --recursive ~/SDL2/* /
+          echo This is step 1a
+          ls ~/SDL2
+        else
+          echo sudo apt-get install --yes libsdl2-dev
+          sudo apt-get install --yes libsdl2-dev
+          mkdir -p ~/SDL2
+          sudo dpkg -L libsdl2-dev | while IFS= read -r f; do if test -f $f; then echo $f; fi; done | xargs cp --parents --target-directory ~/SDL2/
+          echo This is step 1b
+          ls ~/SDL2
+        fi
 
     - name: Use Prime Numbers
       run: |
         echo This is step 2
-        ls /usr/include/SDL2
-        ls /usr
-        ls /usr/lib
-        ls /usr/lib/x86_64-linux-gnu
+          ls ~/SDL2
