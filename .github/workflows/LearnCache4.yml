@@ -32,4 +32,3 @@ jobs:
           path/to/dependencies
           some/other/dependencies
         key: ${{ steps.cache-primes-restore.outputs.cache-primary-key }}
-
