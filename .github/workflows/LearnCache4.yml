@@ -19,7 +19,7 @@ jobs:
         key: ${{ runner.os }}-primes
 
     - name: Generate Prime Numbers
-      if: steps.cache-primes.outputs.cache-hit != 'true'
+      if: steps.cache-primes-save.outputs.cache-hit != 'true'
       run: |
         mkdir -p path/to/dependencies
         mkdir -p some/other/dependencies
