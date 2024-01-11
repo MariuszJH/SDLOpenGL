@@ -1,0 +1,94 @@
+name: Cache SDL for Ubuntu 1
+
+# on: push
+
+on:
+  push: 
+    branches: [master, develop]
+  pull_request:
+    branches: [master, develop]
+
+env:
+  projectName: SDLOpenGL
+  SDL_VERSION: 2.28.5
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@master
+
+    - name: Tool versions
+      shell: bash
+      run: | 
+        echo g++ --version
+        g++ --version
+        echo 
+        echo clang++ --version
+        clang++ --version
+        echo 
+        echo cmake --version
+        cmake --version
+        echo 
+        echo ninja --version
+        ninja --version
+
+    - name: Cache SDL2 into directory accessible without admin privileges # Ubuntu can't handle it otherwise!
+      id: accessible-SDL2-cache1
+      uses: actions/cache@v3
+      with:
+        path: ~/SDL2
+        key: ${{ runner.os }}-accessible-SDL2-cache1
+
+    - name: Install SDL2 if it is not cached and move it from /usr into ~/SDL2
+      if: steps.accessible-SDL2-cache1.outputs.cache-hit != 'true'
+      run: | 
+        echo SDL2 is not yet cached therefore install it
+        echo sudo apt-get install --yes libsdl2-dev
+        sudo apt-get install --yes libsdl2-dev
+        echo Move installed SDL2 from /usr into ~/SDL2/usr
+        mkdir -p ~/SDL2
+        sudo dpkg -L libsdl2-dev | while IFS= read -r f; do if test -f $f; then echo $f; fi; done | xargs cp --parents --target-directory ~/SDL2/
+        echo ls ~/SDL2/usr/include
+        ls ~/SDL2/usr/include
+        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
+        ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
+        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
+        ls ~/SDL2/usr/lib/x86_64-linux-gnu
+
+    - name: Restore SDL2 if cached from ~/SDL2
+      if: steps.accessible-SDL2-cache1.outputs.cache-hit == 'true'
+      run: |
+        echo SDL2 is already cached therefore do not install it, just restore it from cache
+        echo sudo cp --verbose --force --recursive ~/SDL2/* /
+        sudo cp --verbose --force --recursive ~/SDL2/* /
+        echo ls ~/SDL2/usr/include
+        ls ~/SDL2/usr/include
+        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
+        ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
+        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
+        ls ~/SDL2/usr/lib/x86_64-linux-gnu
+
+    - name: CMake build --- Ninja, Gnu, Debug
+      run: |
+        echo ~~~ CMake configure ~~~
+        echo cmake --preset Ninja-Gnu-Debug
+        cmake --preset Ninja-Gnu-Debug
+
+        echo 
+        echo ~~~ CMake build ~~~
+        echo cmake --build --preset Ninja-Gnu-Debug
+        cmake --build --preset Ninja-Gnu-Debug
+
+    - name: Show where SDL2 is cached
+      run: |
+        echo ls ~/SDL2/usr/include
+        ls ~/SDL2/usr/include
+        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
+        ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
+        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
+        ls ~/SDL2/usr/lib/x86_64-linux-gnu
