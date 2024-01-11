@@ -25,14 +25,26 @@ jobs:
         if [[ steps.cache-primes.outputs.cache-hit == 'true' ]]; then
           sudo cp --verbose --force --recursive ~/SDL2/* /
           echo This is step 1a
-          ls ~/SDL2
+          ls ~/SDL2/usr
+          echo This is step 1aa
+          echo ls ~/SDL2/usr/lib
+          ls ~/SDL2/usr/lib
+          echo This is step 1aaa
+          echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
+          ls ~/SDL2/usr/lib/x86_64-linux-gnu
         else
           echo sudo apt-get install --yes libsdl2-dev
           sudo apt-get install --yes libsdl2-dev
           mkdir -p ~/SDL2
           sudo dpkg -L libsdl2-dev | while IFS= read -r f; do if test -f $f; then echo $f; fi; done | xargs cp --parents --target-directory ~/SDL2/
           echo This is step 1b
-          ls ~/SDL2
+          ls ~/SDL2/usr
+          echo This is step 1bb
+          echo ls ~/SDL2/usr/lib
+          ls ~/SDL2/usr/lib
+          echo This is step 1bbb
+          echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
+          ls ~/SDL2/usr/lib/x86_64-linux-gnu
         fi
 
     - name: Use Prime Numbers
