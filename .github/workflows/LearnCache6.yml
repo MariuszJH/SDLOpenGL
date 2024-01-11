@@ -14,14 +14,14 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Cache SDL2
-      id: cache-SDL2a
+      id: cache-SDL2aa
       uses: actions/cache@v3
       with:
         path: ~/SDL2
-        key: ${{ runner.os }}-primes
+        key: ${{ runner.os }}-SDL2aa
 
     # - name: Install SDL2 if not cached
-    #   if: steps.cache-SDL2a.outputs.cache-hit != 'true'
+    #   if: steps.cache-SDL2aa.outputs.cache-hit != 'true'
     #   run: | 
     #     echo HIT FALSE
     #     echo sudo apt-get install --yes libsdl2-dev
@@ -39,7 +39,7 @@ jobs:
     #     ls ~/SDL2/usr/lib/x86_64-linux-gnu
 
     # - name: Install SDL2 if cached
-    #   if: steps.cache-SDL2a.outputs.cache-hit === 'true'
+    #   if: steps.cache-SDL2aa.outputs.cache-hit === 'true'
     #   run: |
     #     echo HIT TRUE
     #     sudo cp --verbose --force --recursive ~/SDL2/* /
@@ -55,7 +55,7 @@ jobs:
       
     - name: Install SDL2
       run: |
-        if [[ steps.cache-SDL2a.outputs.cache-hit == 'true' ]]; then
+        if [[ steps.cache-SDL2aa.outputs.cache-hit == 'true' ]]; then
           echo HIT TRUE
           sudo cp --verbose --force --recursive ~/SDL2/* /
           echo This is step 1a
