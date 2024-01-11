@@ -20,36 +20,78 @@ jobs:
         path: ~/SDL2
         key: ${{ runner.os }}-primes
 
-    - name: Install SDL2
+    - name: Install SDL2 if not cached
+      if: steps.cache-primes.outputs.cache-hit == 'true'
+      run: | 
+        echo HIT FALSE
+        echo sudo apt-get install --yes libsdl2-dev
+        sudo apt-get install --yes libsdl2-dev
+        mkdir -p ~/SDL2
+        sudo dpkg -L libsdl2-dev | while IFS= read -r f; do if test -f $f; then echo $f; fi; done | xargs cp --parents --target-directory ~/SDL2/
+        echo This is step 1b
+        echo ls ~/SDL2/usr/include
+        ls ~/SDL2/usr/include
+        echo This is step 1bb
+        echo ls ~/SDL2/usr/lib/cmake
+        ls ~/SDL2/usr/lib/cmake
+        echo This is step 1bbb
+        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
+        ls ~/SDL2/usr/lib/x86_64-linux-gnu
+
+    - name: Install SDL2 if cached
+      if: steps.cache-primes.outputs.cache-hit != 'true'
       run: |
-        if [[ steps.cache-primes.outputs.cache-hit == 'true' ]]; then
-          echo HIT TRUE
-          sudo cp --verbose --force --recursive ~/SDL2/* /
-          echo This is step 1a
-          ls ~/SDL2/usr
-          echo This is step 1aa
-          echo ls ~/SDL2/usr/lib
-          ls ~/SDL2/usr/lib
-          echo This is step 1aaa
-          echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
-          ls ~/SDL2/usr/lib/x86_64-linux-gnu
-        else
-          echo HIT FALSE
-          echo sudo apt-get install --yes libsdl2-dev
-          sudo apt-get install --yes libsdl2-dev
-          mkdir -p ~/SDL2
-          sudo dpkg -L libsdl2-dev | while IFS= read -r f; do if test -f $f; then echo $f; fi; done | xargs cp --parents --target-directory ~/SDL2/
-          echo This is step 1b
-          ls ~/SDL2/usr
-          echo This is step 1bb
-          echo ls ~/SDL2/usr/lib
-          ls ~/SDL2/usr/lib
-          echo This is step 1bbb
-          echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
-          ls ~/SDL2/usr/lib/x86_64-linux-gnu
-        fi
+        echo HIT TRUE
+        sudo cp --verbose --force --recursive ~/SDL2/* /
+        echo This is step 1a
+        echo ls ~/SDL2/usr/include
+        ls ~/SDL2/usr/include
+        echo This is step 1aa
+        echo ls ~/SDL2/usr/lib/cmake
+        ls ~/SDL2/usr/lib/cmake
+        echo This is step 1aaa
+        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
+        ls ~/SDL2/usr/lib/x86_64-linux-gnu
+      
+    # - name: Install SDL2
+    #   run: |
+    #     if [[ steps.cache-primes.outputs.cache-hit == 'true' ]]; then
+    #       echo HIT TRUE
+    #       sudo cp --verbose --force --recursive ~/SDL2/* /
+    #       echo This is step 1a
+    #       echo ls ~/SDL2/usr/include
+    #       ls ~/SDL2/usr/include
+    #       echo This is step 1aa
+    #       echo ls ~/SDL2/usr/lib/cmake
+    #       ls ~/SDL2/usr/lib/cmake
+    #       echo This is step 1aaa
+    #       echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
+    #       ls ~/SDL2/usr/lib/x86_64-linux-gnu
+    #     else
+    #       echo HIT FALSE
+    #       echo sudo apt-get install --yes libsdl2-dev
+    #       sudo apt-get install --yes libsdl2-dev
+    #       mkdir -p ~/SDL2
+    #       sudo dpkg -L libsdl2-dev | while IFS= read -r f; do if test -f $f; then echo $f; fi; done | xargs cp --parents --target-directory ~/SDL2/
+    #       echo This is step 1b
+    #       echo ls ~/SDL2/usr/include
+    #       ls ~/SDL2/usr/include
+    #       echo This is step 1bb
+    #       echo ls ~/SDL2/usr/lib/cmake
+    #       ls ~/SDL2/usr/lib/cmake
+    #       echo This is step 1bbb
+    #       echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
+    #       ls ~/SDL2/usr/lib/x86_64-linux-gnu
+    #     fi
 
     - name: Use Prime Numbers
       run: |
         echo This is step 2
-          ls ~/SDL2
+        echo ls ~/SDL2/usr/include
+        ls ~/SDL2/usr/include
+        echo This is step 2aa
+        echo ls ~/SDL2/usr/lib/cmake
+        ls ~/SDL2/usr/lib/cmake
+        echo This is step 2aaa
+        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
+        ls ~/SDL2/usr/lib/x86_64-linux-gnu
