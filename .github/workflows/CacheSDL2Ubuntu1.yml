@@ -63,7 +63,7 @@ jobs:
     - name: Restore SDL2 if cached from ~/SDL2
       if: steps.accessible-SDL2-cache1.outputs.cache-hit == 'true'
       run: |
-        echo SDL2 is already cached therefore do not install it, just restore it from cache
+        echo SDL2 is already cached therefore do not install it, just reuse from cache
         echo sudo cp --verbose --force --recursive ~/SDL2/* /
         sudo cp --verbose --force --recursive ~/SDL2/* /
         echo ls ~/SDL2/usr/include
