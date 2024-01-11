@@ -59,8 +59,8 @@ jobs:
           echo HIT TRUE
           sudo cp --verbose --force --recursive ~/SDL2/* /
           echo This is step 1a
-          echo ls ~/SDL2/usr/include
-          ls ~/SDL2/usr/include
+          echo ls ~/SDL2/usr/include/SDL2
+          ls ~/SDL2/usr/include/SDL2
           echo This is step 1aa
           echo ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake
           ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake
@@ -74,8 +74,8 @@ jobs:
           mkdir -p ~/SDL2
           sudo dpkg -L libsdl2-dev | while IFS= read -r f; do if test -f $f; then echo $f; fi; done | xargs cp --parents --target-directory ~/SDL2/
           echo This is step 1b
-          echo ls ~/SDL2/usr/include
-          ls ~/SDL2/usr/include
+          echo ls ~/SDL2/usr/include/SDL2
+          ls ~/SDL2/usr/include/SDL2
           echo This is step 1bb
           echo ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake
           ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake
@@ -87,8 +87,8 @@ jobs:
     - name: Use Prime Numbers
       run: |
         echo This is step 2
-        echo ls ~/SDL2/usr/include
-        ls ~/SDL2/usr/include
+        echo ls ~/SDL2/usr/include/SDL2
+        ls ~/SDL2/usr/include/SDL2
         echo This is step 2aa
         echo ls ~/SDL2/usr/lib
         ls ~/SDL2/usr/lib
