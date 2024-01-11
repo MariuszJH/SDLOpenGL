@@ -475,3 +475,4 @@ jobs:
       with:
         name: Binaries_${{env.projectName}}_${{runner.os}}_${{matrix.generator.buildDir}}_${{matrix.architecture.buildSubDir}}_${{matrix.compilerCpp.buildSubDir}}
         path: ${{matrix.generator.buildDir}}/${{matrix.architecture.buildSubDir}}/${{matrix.compilerCpp.buildSubDir}}/buildOut
+
