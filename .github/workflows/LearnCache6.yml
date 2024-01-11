@@ -23,6 +23,7 @@ jobs:
     - name: Install SDL2
       run: |
         if [[ steps.cache-primes.outputs.cache-hit == 'true' ]]; then
+          echo HIT TRUE
           sudo cp --verbose --force --recursive ~/SDL2/* /
           echo This is step 1a
           ls ~/SDL2/usr
@@ -33,6 +34,7 @@ jobs:
           echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
           ls ~/SDL2/usr/lib/x86_64-linux-gnu
         else
+          echo HIT FALSE
           echo sudo apt-get install --yes libsdl2-dev
           sudo apt-get install --yes libsdl2-dev
           mkdir -p ~/SDL2
