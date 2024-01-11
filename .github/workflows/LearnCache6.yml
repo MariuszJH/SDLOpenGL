@@ -62,8 +62,8 @@ jobs:
           echo ls ~/SDL2/usr/include
           ls ~/SDL2/usr/include
           echo This is step 1aa
-          echo ls ~/SDL2/usr/lib
-          ls ~/SDL2/usr/lib
+          echo ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake
+          ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake
           echo This is step 1aaa
           echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
           ls ~/SDL2/usr/lib/x86_64-linux-gnu
@@ -77,8 +77,8 @@ jobs:
           echo ls ~/SDL2/usr/include
           ls ~/SDL2/usr/include
           echo This is step 1bb
-          echo ls ~/SDL2/usr/lib
-          ls ~/SDL2/usr/lib
+          echo ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake
+          ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake
           echo This is step 1bbb
           echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
           ls ~/SDL2/usr/lib/x86_64-linux-gnu
