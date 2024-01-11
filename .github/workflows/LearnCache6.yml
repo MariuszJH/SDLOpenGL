@@ -21,7 +21,7 @@ jobs:
         key: ${{ runner.os }}-primes
 
     - name: Install SDL2 if not cached
-      if: steps.cache-primes.outputs.cache-hit == 'true'
+      if: steps.cache-primes.outputs.cache-hit != 'true'
       run: | 
         echo HIT FALSE
         echo sudo apt-get install --yes libsdl2-dev
@@ -39,7 +39,7 @@ jobs:
         ls ~/SDL2/usr/lib/x86_64-linux-gnu
 
     - name: Install SDL2 if cached
-      if: steps.cache-primes.outputs.cache-hit != 'true'
+      if: steps.cache-primes.outputs.cache-hit === 'true'
       run: |
         echo HIT TRUE
         sudo cp --verbose --force --recursive ~/SDL2/* /
