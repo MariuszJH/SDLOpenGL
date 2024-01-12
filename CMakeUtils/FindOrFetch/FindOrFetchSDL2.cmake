@@ -2,7 +2,7 @@
 Either find preinstaled SDL2 package, or if it's absent, fetch it from github
 #]=========================]
 set(packageName SDL2)
-# set(packageVersion 2.28.5)
+set(packageVersion 2.28.5)
 
 #[=========================[
 Point the path to ${packageName}Config.cmake or ${packageName}-config.cmake
@@ -33,17 +33,17 @@ if(${packageName}_FOUND)
     message(STATUS "${packageName}_INCLUDE_DIRS: ${${packageName}_INCLUDE_DIRS}")
     message(STATUS "${packageName}_LIBRARIES: ${${packageName}_LIBRARIES}")
 else()
-    # include(FetchContent)
-    # set(FETCHCONTENT_QUIET FALSE)
+    include(FetchContent)
+    set(FETCHCONTENT_QUIET FALSE)
     
-    # FetchContent_Declare(sdl2
-    #     GIT_REPOSITORY  https://github.com/libsdl-org/SDL.git
-    #     GIT_TAG         SDL2 # release2-28.3
-    #     SOURCE_DIR      ${CMAKE_SOURCE_DIR}/External/SDL2
-    #     GIT_PROGRESS    TRUE
-    #     GIT_SHALLOW     TRUE
-    #     USES_TERMINAL_DOWNLOAD TRUE   # <---- only used by Ninja generator
-    # )
+    FetchContent_Declare(sdl2
+        GIT_REPOSITORY  https://github.com/libsdl-org/SDL.git
+        GIT_TAG         SDL2 # release2-28.3
+        SOURCE_DIR      ${CMAKE_SOURCE_DIR}/External/SDL2
+        GIT_PROGRESS    TRUE
+        GIT_SHALLOW     TRUE
+        USES_TERMINAL_DOWNLOAD TRUE   # <---- only used by Ninja generator
+    )
 
-    # FetchContent_MakeAvailable(sdl2)
+    FetchContent_MakeAvailable(sdl2)
 endif()

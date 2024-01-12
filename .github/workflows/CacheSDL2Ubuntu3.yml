@@ -1,4 +1,4 @@
-name: Cache SDL for Ubuntu 1
+name: Cache SDL for Ubuntu 3
 
 # on: push
 
@@ -50,30 +50,19 @@ jobs:
       if: steps.SDL2-cache1.outputs.cache-hit != 'true'
       run: | 
         echo SDL2 is not yet cached therefore install it
-        echo sudo apt-get install --yes libsdl2-dev
-        sudo apt-get install --yes libsdl2-dev
-        echo Move installed SDL2 from /usr into ~/SDL2/usr
-        mkdir -p ~/SDL2
-        sudo dpkg -L libsdl2-dev | while IFS= read -r f; do if test -f $f; then echo $f; fi; done | xargs cp --parents --target-directory ~/SDL2/
-        echo ls ~/SDL2/usr/include
-        ls ~/SDL2/usr/include
-        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
-        ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
-        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
-        ls ~/SDL2/usr/lib/x86_64-linux-gnu
-
-    - name: Restore SDL2 if cached from ~/SDL2
-      if: steps.SDL2-cache1.outputs.cache-hit == 'true'
-      run: |
-        echo SDL2 is already cached therefore do not install it, just reuse from cache
-        echo sudo cp --verbose --force --recursive ~/SDL2/* /
-        sudo cp --verbose --force --recursive ~/SDL2/* /
-        echo ls /usr/include
-        ls /usr/include
-        echo ls /usr/lib/x86_64-linux-gnu/cmake/SDL2
-        ls /usr/lib/x86_64-linux-gnu/cmake/SDL2
-        echo ls /usr/lib/x86_64-linux-gnu
-        ls /usr/lib/x86_64-linux-gnu
+        echo git clone --depth 1 https://github.com/libsdl-org/SDL.git External/SDL2
+        git clone --depth 1 https://github.com/libsdl-org/SDL.git SDL2
+        cd SDL2
+        ./configure --prefix=../External/SDL2
+        make
+        make install
+        find ../External/SDL2/ -iname SDL*config.cmake
+      # echo ls ~/SDL2/usr/include
+      # ls ~/SDL2/usr/include
+      # echo ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
+      # ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
+      # echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
+      # ls ~/SDL2/usr/lib/x86_64-linux-gnu
 
     - name: CMake build --- Ninja, Gnu, Debug
       run: |
