@@ -46,10 +46,13 @@ jobs:
 
     - name: Install SDL2 if it is not cached and move it from /usr into ~/SDL2, or restore it from cache
       run: | 
-        if [[ ${{steps.cache-SDL2aaabb.outputs.cache-hit == 'true'}} == 'true' ]]; then
-          echo SDL2 is already cached therefore do not install it, just restore it from cache
-          echo sudo cp --verbose --force --recursive ~/SDL2/* /
-          sudo cp --verbose --force --recursive ~/SDL2/* /
+        if [[ ${{steps.accessible-SDL2-cache2.outputs.cache-hit == 'true'}} == 'false' ]]; then
+          echo SDL2 is not yet cached therefore install it
+          echo sudo apt-get install --yes libsdl2-dev
+          sudo apt-get install --yes libsdl2-dev
+          echo Move installed SDL2 from /usr into ~/SDL2/usr
+          mkdir -p ~/SDL2
+          sudo dpkg -L libsdl2-dev | while IFS= read -r f; do if test -f $f; then echo $f; fi; done | xargs cp --parents --target-directory ~/SDL2/
           echo ls ~/SDL2/usr/include
           ls ~/SDL2/usr/include
           echo ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
@@ -57,12 +60,9 @@ jobs:
           echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
           ls ~/SDL2/usr/lib/x86_64-linux-gnu
         else
-          echo SDL2 is not yet cached therefore install it
-          echo sudo apt-get install --yes libsdl2-dev
-          sudo apt-get install --yes libsdl2-dev
-          echo Move installed SDL2 from /usr into ~/SDL2/usr
-          mkdir -p ~/SDL2
-          sudo dpkg -L libsdl2-dev | while IFS= read -r f; do if test -f $f; then echo $f; fi; done | xargs cp --parents --target-directory ~/SDL2/
+          echo SDL2 is already cached therefore do not install it, just restore it from cache
+          echo sudo cp --verbose --force --recursive ~/SDL2/* /
+          sudo cp --verbose --force --recursive ~/SDL2/* /
           echo ls ~/SDL2/usr/include
           ls ~/SDL2/usr/include
           echo ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
