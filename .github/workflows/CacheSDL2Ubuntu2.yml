@@ -63,19 +63,19 @@ jobs:
           echo SDL2 is already cached therefore do not install it, just restore it from cache
           echo sudo cp --verbose --force --recursive ~/SDL2/* /
           sudo cp --verbose --force --recursive ~/SDL2/* /
-          echo ls ~/SDL2/usr/include
-          ls ~/SDL2/usr/include
-          echo ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
-          ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
-          echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
-          ls ~/SDL2/usr/lib/x86_64-linux-gnu
+          echo ls /usr/include
+          ls /usr/include
+          echo ls /usr/lib/x86_64-linux-gnu/cmake/SDL2
+          ls /usr/lib/x86_64-linux-gnu/cmake/SDL2
+          echo ls /usr/lib/x86_64-linux-gnu
+          ls /usr/lib/x86_64-linux-gnu
         fi
 
     - name: CMake build --- Ninja, Gnu, Debug
       run: |
         echo ~~~ CMake configure ~~~
-        echo cmake --preset Ninja-Gnu-Debug -D SDL2_DIR=~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
-        cmake --preset Ninja-Gnu-Debug -D SDL2_DIR=~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
+        echo cmake --preset Ninja-Gnu-Debug -D SDL2_DIR=/usr/lib/x86_64-linux-gnu/cmake/SDL2
+        cmake --preset Ninja-Gnu-Debug -D SDL2_DIR=/usr/lib/x86_64-linux-gnu/cmake/SDL2
 
         echo 
         echo ~~~ CMake build ~~~
