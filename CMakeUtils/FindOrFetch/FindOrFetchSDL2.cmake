@@ -2,8 +2,7 @@
 Either find preinstaled SDL2 package, or if it's absent, fetch it from github
 #]=========================]
 set(packageName SDL2)
-# set(packageVersion 2.28.5)
-set(packageVersion 2.0.20)
+set(packageVersion 2.28.5)
 
 #[=========================[
 Point the path to ${packageName}Config.cmake or ${packageName}-config.cmake
@@ -26,7 +25,7 @@ elseif(UNIX AND NOT APPLE)
 endif()
 
 # Omit REQUIRED keyword so as to be able to fetch the package if it is not installed
-find_package(${packageName} ${packageVersion} REQUIRED)
+find_package(${packageName} ${packageVersion})
 
 if(${packageName}_FOUND)
     message(STATUS "${packageName}_FOUND: ${${packageName}_FOUND}")
