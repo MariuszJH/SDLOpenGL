@@ -70,25 +70,43 @@ jobs:
         cmake --build --preset Ninja-Clang-Debug
 
 
-  # build-on-windows:
-  #   runs-on: windows-latest
-  #   steps:
-  #   - name: Checkout repo
-  #     uses: actions/checkout@v4
+  build-on-windows:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
 
-  #   - name: Setup MSVC compiler
-  #     uses: ilammy/msvc-dev-cmd@v1
+    - name: Setup MSVC compiler
+      uses: ilammy/msvc-dev-cmd@v1
 
-  #   - name: Install Ninja
-  #     uses: seanmiddleditch/gha-setup-ninja@master
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@master
 
-  #   - name: CMake configure --- Ninja, Msvc, Debug
-  #     run: |
-  #       echo cmake --preset Ninja-Msvc-Debug
-  #       cmake --preset Ninja-Msvc-Debug
+    - name: Cache SDL2
+      id: windows-SDL2-ID-installed-cache1
+      uses: actions/cache@v3
+      with:
+        path: C:\SDL2
+        key: windows-SDL2-KEY-installed-cache1
 
-  #   - name: CMake build --- Ninja, Msvc, Debug
-  #     run: |
-  #       echo cmake --build --preset Ninja-Msvc-Debug
-  #       cmake --build --preset Ninja-Msvc-Debug
+    - name: Is SDL2 cached?
+      if: steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit == 'true'
+      run: echo YES cached!
+
+    - name: Is SDL2 not yet cached?
+      if: steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit != 'true'
+      shell: powershell
+      run: |
+        Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
+        Expand-Archive C:\SDL.zip -DestinationPath C:\SDL2
+
+    - name: CMake configure --- Ninja, Msvc, Debug
+      run: |
+        echo cmake --preset Ninja-Msvc-Debug
+        cmake --preset Ninja-Msvc-Debug
+
+    - name: CMake build --- Ninja, Msvc, Debug
+      run: |
+        echo cmake --build --preset Ninja-Msvc-Debug
+        cmake --build --preset Ninja-Msvc-Debug
 
