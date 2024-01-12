@@ -2,7 +2,8 @@
 Either find preinstaled SDL2 package, or if it's absent, fetch it from github
 #]=========================]
 set(packageName SDL2)
-set(packageVersion 2.28.5)
+# set(packageVersion 2.28.5)
+set(packageVersion 2.0.20)
 
 #[=========================[
 Point the path to ${packageName}Config.cmake or ${packageName}-config.cmake
