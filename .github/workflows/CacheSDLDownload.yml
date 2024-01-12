@@ -21,18 +21,18 @@ jobs:
       uses: seanmiddleditch/gha-setup-ninja@master
 
     - name: Cache SDL2
-      id: linux-SDL2-ID-cache3
+      id: linux-SDL2-ID-cache4
       uses: actions/cache@v3
       with:
         path: External/SDL2
-        key: linux-SDL2-KEY-cache3
+        key: linux-SDL2-KEY-cache4
 
     - name: Is SDL2 cached?
-      if: steps.linux-SDL2-ID-cache3.outputs.cache-hit == 'true'
+      if: steps.linux-SDL2-ID-cache4.outputs.cache-hit == 'true'
       run: echo YES cached!
 
     - name: Is SDL2 not yet cached?
-      if: steps.linux-SDL2-ID-cache3.outputs.cache-hit == 'false'
+      if: steps.linux-SDL2-ID-cache4.outputs.cache-hit != 'true'
       run: echo NO not cached!
 
     - name: CMake configure --- Ninja, Gnu, Debug
@@ -56,18 +56,18 @@ jobs:
       uses: seanmiddleditch/gha-setup-ninja@master
 
     - name: Cache SDL2
-      id: mac-SDL2-ID-cache3
+      id: mac-SDL2-ID-cache4
       uses: actions/cache@v3
       with:
         path: External/SDL2
-        key: mac-SDL2-KEY-cache3
+        key: mac-SDL2-KEY-cache4
 
     - name: Is SDL2 cached?
-      if: steps.mac-SDL2-ID-cache3.outputs.cache-hit == 'true'
+      if: steps.mac-SDL2-ID-cache4.outputs.cache-hit == 'true'
       run: echo YES cached!
 
     - name: Is SDL2 not yet cached?
-      if: steps.mac-SDL2-ID-cache3.outputs.cache-hit == 'false'
+      if: steps.mac-SDL2-ID-cache4.outputs.cache-hit != 'true'
       run: echo NO not cached!
 
     - name: CMake configure --- Ninja, Clang, Debug
@@ -94,18 +94,18 @@ jobs:
       uses: seanmiddleditch/gha-setup-ninja@master
 
     - name: Cache SDL2
-      id: windows-SDL2-ID-cache3
+      id: windows-SDL2-ID-cache4
       uses: actions/cache@v3
       with:
         path: External/SDL2
-        key: windows-SDL2-KEY-cache3
+        key: windows-SDL2-KEY-cache4
 
     - name: Is SDL2 cached?
-      if: steps.windows-SDL2-ID-cache3.outputs.cache-hit == 'true'
+      if: steps.windows-SDL2-ID-cache4.outputs.cache-hit == 'true'
       run: echo YES cached!
 
     - name: Is SDL2 not yet cached?
-      if: steps.windows-SDL2-ID-cache3.outputs.cache-hit == 'false'
+      if: steps.windows-SDL2-ID-cache4.outputs.cache-hit != 'true'
       run: echo NO not cached!
 
     - name: CMake configure --- Ninja, Msvc, Debug
