@@ -18,14 +18,14 @@ elseif(LINUX)
     # set(packageVersion 2.26.3)
 elseif(APPLE)
     # set(${packageName}_DIR /opt/local/lib/cmake/SDL2)
-    # set(${packageName}_DIR /usr/local/Cellar/sdl2/2.28.5/lib/cmake/SDL2)
+    set(${packageName}_DIR /usr/local/Cellar/sdl2/2.28.5/lib/cmake/SDL2)
     # set(packageVersion 2.28.0)
 elseif(UNIX AND NOT APPLE)
     set(${packageName}_DIR )
 endif()
 
 # Omit REQUIRED keyword so as to be able to fetch the package if it is not installed
-# find_package(${packageName} ${packageVersion})
+find_package(${packageName} ${packageVersion} REQUIRED)
 
 if(${packageName}_FOUND)
     message(STATUS "${packageName}_FOUND: ${${packageName}_FOUND}")
