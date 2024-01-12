@@ -76,8 +76,8 @@ jobs:
     - name: CMake build --- Ninja, Gnu, Debug
       run: |
         echo ~~~ CMake configure ~~~
-        echo cmake --preset Ninja-Gnu-Debug
-        cmake --preset Ninja-Gnu-Debug
+        echo cmake --preset Ninja-Gnu-Debug -D SDL2_DIR=~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
+        cmake --preset Ninja-Gnu-Debug -D SDL2_DIR=~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
 
         echo 
         echo ~~~ CMake build ~~~

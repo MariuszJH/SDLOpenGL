@@ -46,7 +46,7 @@ jobs:
 
     - name: Install SDL2 if it is not cached and move it from /usr into ~/SDL2, or restore it from cache
       run: | 
-        if [[ ${{steps.cache-SDL2aaabb.outputs.cache-hit == 'true'}} == 'false' ]]; then
+        if [[ ${{steps.cache-SDL2aaabb.outputs.cache-hit == 'true'}} != 'true' ]]; then
           echo SDL2 is not yet cached therefore install it
           echo sudo apt-get install --yes libsdl2-dev
           sudo apt-get install --yes libsdl2-dev
@@ -74,8 +74,8 @@ jobs:
     - name: CMake build --- Ninja, Gnu, Debug
       run: |
         echo ~~~ CMake configure ~~~
-        echo cmake --preset Ninja-Gnu-Debug
-        cmake --preset Ninja-Gnu-Debug
+        echo cmake --preset Ninja-Gnu-Debug -D SDL2_DIR=~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
+        cmake --preset Ninja-Gnu-Debug -D SDL2_DIR=~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
 
         echo 
         echo ~~~ CMake build ~~~
