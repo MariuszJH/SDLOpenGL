@@ -25,7 +25,7 @@ elseif(UNIX AND NOT APPLE)
 endif()
 
 # Omit REQUIRED keyword so as to be able to fetch the package if it is not installed
-find_package(${packageName} ${packageVersion})
+# find_package(${packageName} ${packageVersion})
 
 if(${packageName}_FOUND)
     message(STATUS "${packageName}_FOUND: ${${packageName}_FOUND}")
