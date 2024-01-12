@@ -21,11 +21,11 @@ jobs:
       uses: seanmiddleditch/gha-setup-ninja@master
 
     - name: Cache SDL2
-      id: ${{runner.os}}-SDL2-ID-cache1
+      id: linux-SDL2-ID-cache1
       uses: actions/cache@v3
       with:
         path: External/SDL2
-        key: ${{runner.os}}-SDL2-KEY-cache1
+        key: linux-SDL2-KEY-cache1
 
     - name: CMake configure --- Ninja, Gnu, Debug
       run: |
@@ -48,11 +48,11 @@ jobs:
       uses: seanmiddleditch/gha-setup-ninja@master
 
     - name: Cache SDL2
-      id: ${{runner.os}}-SDL2-ID-cache1
+      id: mac-SDL2-ID-cache1
       uses: actions/cache@v3
       with:
         path: External/SDL2
-        key: ${{runner.os}}-SDL2-KEY-cache1
+        key: mac-SDL2-KEY-cache1
 
     - name: CMake configure --- Ninja, Clang, Debug
       run: |
@@ -78,11 +78,11 @@ jobs:
       uses: seanmiddleditch/gha-setup-ninja@master
 
     - name: Cache SDL2
-      id: ${{runner.os}}-SDL2-ID-cache1
+      id: windows-SDL2-ID-cache1
       uses: actions/cache@v3
       with:
         path: External/SDL2
-        key: ${{runner.os}}-SDL2-KEY-cache1
+        key: windows-SDL2-KEY-cache1
 
     - name: CMake configure --- Ninja, Msvc, Debug
       run: |
