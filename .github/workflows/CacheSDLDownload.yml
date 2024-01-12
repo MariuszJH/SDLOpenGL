@@ -27,6 +27,14 @@ jobs:
         path: External/SDL2
         key: linux-SDL2-KEY-cache1
 
+    - name: Is SDL2 cached?
+      if: steps.cache-primes.outputs.cache-hit == 'true'
+      run: echo YES cached!
+
+    - name: Is SDL2 not yet cached?
+      if: steps.cache-primes.outputs.cache-hit == 'false'
+      run: echo NO not cached!
+
     - name: CMake configure --- Ninja, Gnu, Debug
       run: |
         echo cmake --preset Ninja-Gnu-Debug
@@ -53,6 +61,14 @@ jobs:
       with:
         path: External/SDL2
         key: mac-SDL2-KEY-cache1
+
+    - name: Is SDL2 cached?
+      if: steps.cache-primes.outputs.cache-hit == 'true'
+      run: echo YES cached!
+
+    - name: Is SDL2 not yet cached?
+      if: steps.cache-primes.outputs.cache-hit == 'false'
+      run: echo NO not cached!
 
     - name: CMake configure --- Ninja, Clang, Debug
       run: |
@@ -83,6 +99,14 @@ jobs:
       with:
         path: External/SDL2
         key: windows-SDL2-KEY-cache1
+
+    - name: Is SDL2 cached?
+      if: steps.cache-primes.outputs.cache-hit == 'true'
+      run: echo YES cached!
+
+    - name: Is SDL2 not yet cached?
+      if: steps.cache-primes.outputs.cache-hit == 'false'
+      run: echo NO not cached!
 
     - name: CMake configure --- Ninja, Msvc, Debug
       run: |
