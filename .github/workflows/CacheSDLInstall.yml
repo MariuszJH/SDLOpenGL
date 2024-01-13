@@ -54,6 +54,7 @@ jobs:
         mkdir -p ~/SDL2
 
         packages=(
+          libsdl2-dev 
           libasound2-dev
           libdbus-1-dev
           libdecor-0-dev
@@ -93,6 +94,8 @@ jobs:
 
         echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
         ls ~/SDL2/usr/lib/x86_64-linux-gnu
+        echo ls ~/SDL2/usr/include/SDL2
+        ls ~/SDL2/usr/include/SDL2
 
         echo NO not yet cached! Find in ~/SDL2/usr
         find ~/SDL2/usr/ -iname SDL.h
@@ -255,4 +258,3 @@ jobs:
       run: |
         echo cmake --build --preset Ninja-Msvc-Debug
         cmake --build --preset Ninja-Msvc-Debug
-
