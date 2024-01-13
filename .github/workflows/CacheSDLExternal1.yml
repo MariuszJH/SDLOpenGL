@@ -44,8 +44,8 @@ jobs:
         
     - name: CMake configure --- Ninja, Gnu, Debug
       run: |
-        echo cmake --preset Ninja-Gnu-Debug
-        cmake --preset Ninja-Gnu-Debug
+        echo cmake --preset Ninja-Gnu-Debug -D SDL2_DIR=External/SDL2/VisualC/pkg-support/cmake
+        cmake --preset Ninja-Gnu-Debug -D SDL2_DIR=External/SDL2/VisualC/pkg-support/cmake
 
     - name: CMake build --- Ninja, Gnu, Debug
       run: |
@@ -100,8 +100,8 @@ jobs:
 
     - name: CMake configure --- Ninja, Clang, Debug
       run: |
-        echo cmake --preset Ninja-Clang-Debug
-        cmake --preset Ninja-Clang-Debug
+        echo cmake --preset Ninja-Clang-Debug -D SDL2_DIR=External/SDL2/Xcode/SDL/pkg-support/resources/CMake
+        cmake --preset Ninja-Clang-Debug -D SDL2_DIR=External/SDL2/Xcode/SDL/pkg-support/resources/CMake
 
     - name: CMake build --- Ninja, Clang, Debug
       run: |
@@ -156,11 +156,10 @@ jobs:
 
     - name: CMake configure --- Ninja, Msvc, Debug
       run: |
-        echo cmake --preset Ninja-Msvc-Debug
-        cmake --preset Ninja-Msvc-Debug
+        echo cmake --preset Ninja-Msvc-Debug -D SDL2_DIR=External/SDL2/mingw/pkg-support/cmake
+        cmake --preset Ninja-Msvc-Debug -D SDL2_DIR=External/SDL2/mingw/pkg-support/cmake
 
     - name: CMake build --- Ninja, Msvc, Debug
       run: |
         echo cmake --build --preset Ninja-Msvc-Debug
         cmake --build --preset Ninja-Msvc-Debug
-
