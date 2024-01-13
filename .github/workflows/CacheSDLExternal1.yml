@@ -24,17 +24,17 @@ jobs:
       id: linux-SDL2-ID-external-cache1
       uses: actions/cache@v3
       with:
-        path: ~/External/SDL2
+        path: External/SDL2
         key: linux-SDL2-KEY-external-cache1
 
     - name: Is SDL2 cached?
       if: steps.linux-SDL2-ID-external-cache1.outputs.cache-hit == 'true'
       run: |
         echo YES cached!
-        find ~/External/SDL2 -iname SDL.h
-        find ~/External/SDL2 -iname libSDL2.a
-        find ~/External/SDL2 -iname libSDL2.so
-        find ~/External/SDL2 -iname SDL2?Config.cmake
+        find External/SDL2 -iname SDL.h
+        find External/SDL2 -iname libSDL2.a
+        find External/SDL2 -iname libSDL2.so
+        find External/SDL2 -iname SDL2?Config.cmake
 
     - name: Is SDL2 not yet cached?
       if: steps.linux-SDL2-ID-external-cache1.outputs.cache-hit != 'true'
@@ -66,24 +66,24 @@ jobs:
       id: mac-SDL2-ID-external-cache1
       uses: actions/cache@v3
       with:
-        path: ~/External/SDL2
+        path: External/SDL2
         key: mac-SDL2-KEY-external-cache1
 
     - name: Is SDL2 cached?
       if: steps.mac-SDL2-ID-external-cache1.outputs.cache-hit == 'true'
       run: |
         echo YES cached!
-        find ~/External/SDL2 -iname SDL.h
-        find ~/External/SDL2 -iname libSDL2.a
-        find ~/External/SDL2 -iname libSDL2.so
-        find ~/External/SDL2 -iname SDL2?Config.cmake
+        find External/SDL2 -iname SDL.h
+        find External/SDL2 -iname libSDL2.a
+        find External/SDL2 -iname libSDL2.so
+        find External/SDL2 -iname SDL2?Config.cmake
         
-      # echo ls ~/External/SDL2/2.28.5/include/SDL2
-      # ls ~/External/SDL2/2.28.5/include/SDL2
-      # echo ls ~/External/SDL2/2.28.5/lib
-      # ls ~/External/SDL2/2.28.5/lib
-      # echo ls ~/External/SDL2/2.28.5/lib/cmake/SDL2
-      # ls ~/External/SDL2/2.28.5/lib/cmake/SDL2
+      # echo ls External/SDL2/2.28.5/include/SDL2
+      # ls External/SDL2/2.28.5/include/SDL2
+      # echo ls External/SDL2/2.28.5/lib
+      # ls External/SDL2/2.28.5/lib
+      # echo ls External/SDL2/2.28.5/lib/cmake/SDL2
+      # ls External/SDL2/2.28.5/lib/cmake/SDL2
 
     - name: Is SDL2 not yet cached?
       if: steps.mac-SDL2-ID-external-cache1.outputs.cache-hit != 'true'
@@ -91,12 +91,12 @@ jobs:
         echo NO not yet cached!
         ls External
         
-      # echo ls ~/External/SDL2/2.28.5/include/SDL2
-      # ls ~/External/SDL2/2.28.5/include/SDL2
-      # echo ls ~/External/SDL2/2.28.5/lib
-      # ls ~/External/SDL2/2.28.5/lib
-      # echo ls ~/External/SDL2/2.28.5/lib/cmake/SDL2
-      # ls ~/External/SDL2/2.28.5/lib/cmake/SDL2
+      # echo ls External/SDL2/2.28.5/include/SDL2
+      # ls External/SDL2/2.28.5/include/SDL2
+      # echo ls External/SDL2/2.28.5/lib
+      # ls External/SDL2/2.28.5/lib
+      # echo ls External/SDL2/2.28.5/lib/cmake/SDL2
+      # ls External/SDL2/2.28.5/lib/cmake/SDL2
 
     - name: CMake configure --- Ninja, Clang, Debug
       run: |
