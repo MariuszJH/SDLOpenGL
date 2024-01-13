@@ -40,7 +40,7 @@ jobs:
       if: steps.linux-SDL2-ID-external-cache1.outputs.cache-hit != 'true'
       run: |
         echo NO not yet cached!
-        ls 
+        ls External
         
     - name: CMake configure --- Ninja, Gnu, Debug
       run: |
@@ -89,7 +89,7 @@ jobs:
       if: steps.mac-SDL2-ID-external-cache1.outputs.cache-hit != 'true'
       run: |
         echo NO not yet cached!
-        ls 
+        ls External
         
       # echo ls ~/External/SDL2/2.28.5/include/SDL2
       # ls ~/External/SDL2/2.28.5/include/SDL2
@@ -152,7 +152,7 @@ jobs:
       shell: bash
       run: |
         echo NO not yet cached!
-        ls
+        ls External
 
     - name: CMake configure --- Ninja, Msvc, Debug
       run: |
