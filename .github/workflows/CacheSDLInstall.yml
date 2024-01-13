@@ -21,14 +21,14 @@ jobs:
       uses: seanmiddleditch/gha-setup-ninja@master
 
     - name: Cache SDL2
-      id: linux-SDL2-ID-installed-cache2
+      id: linux-SDL2-ID-installed-cache1
       uses: actions/cache@v3
       with:
         path: ~/SDL2/usr/
-        key: linux-SDL2-KEY-installed-cache2
+        key: linux-SDL2-KEY-installed-cache1
 
     - name: Is SDL2 cached? Do not install SDL2!
-      if: steps.linux-SDL2-ID-installed-cache2.outputs.cache-hit == 'true'
+      if: steps.linux-SDL2-ID-installed-cache1.outputs.cache-hit == 'true'
       run: |
         echo sudo cp --verbose --force --recursive ~/SDL2/* /
         sudo cp --verbose --force --recursive ~/SDL2/* /
@@ -39,12 +39,12 @@ jobs:
         find ~/SDL2/usr/ -iname libSDL2.so
         find ~/SDL2/usr/ -iname SDL2?Config.cmake
 
-        echo ls ~/SDL2/usr/include
-        ls ~/SDL2/usr/include
-        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
-        ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
+        echo ls ~/SDL2/usr/include/SDL2
+        ls ~/SDL2/usr/include/SDL2
         echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
         ls ~/SDL2/usr/lib/x86_64-linux-gnu
+        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
+        ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
 
         echo Also find in /usr
         find /usr/ -iname SDL.h
@@ -53,7 +53,7 @@ jobs:
         find /usr/ -iname SDL2?Config.cmake
 
     - name: Is SDL2 not yet cached? Install SDL2 and cache it!
-      if: steps.linux-SDL2-ID-installed-cache2.outputs.cache-hit != 'true'
+      if: steps.linux-SDL2-ID-installed-cache1.outputs.cache-hit != 'true'
       run: |
         echo sudo apt-get install --yes libsdl2-dev
         sudo apt-get install --yes libsdl2-dev
@@ -68,12 +68,12 @@ jobs:
         find ~/SDL2/usr/ -iname libSDL2.so
         find ~/SDL2/usr/ -iname SDL2?Config.cmake
 
-        echo ls ~/SDL2/usr/include
-        ls ~/SDL2/usr/include
-        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
-        ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
+        echo ls ~/SDL2/usr/include/SDL2
+        ls ~/SDL2/usr/include/SDL2
         echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
         ls ~/SDL2/usr/lib/x86_64-linux-gnu
+        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
+        ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
 
         echo Also find in /usr
         find /usr/ -iname SDL.h
@@ -102,14 +102,14 @@ jobs:
       uses: seanmiddleditch/gha-setup-ninja@master
 
     - name: Cache SDL2
-      id: mac-SDL2-ID-installed-cache2
+      id: mac-SDL2-ID-installed-cache1
       uses: actions/cache@v3
       with:
         path: /usr/local/Cellar/sdl2
-        key: mac-SDL2-KEY-installed-cache2
+        key: mac-SDL2-KEY-installed-cache1
 
     - name: Is SDL2 cached? Do not install SDL2!
-      if: steps.mac-SDL2-ID-installed-cache2.outputs.cache-hit == 'true'
+      if: steps.mac-SDL2-ID-installed-cache1.outputs.cache-hit == 'true'
       run: |
         echo YES cached!
         find /usr/local/Cellar/sdl2 -iname SDL.h
@@ -121,11 +121,11 @@ jobs:
         ls /usr/local/Cellar/sdl2/2.28.5/include/SDL2
         echo ls /usr/local/Cellar/sdl2/2.28.5/lib
         ls /usr/local/Cellar/sdl2/2.28.5/lib
-      # echo ls /usr/local/Cellar/sdl2/2.28.5/lib/cmake/SDL2
-      # ls /usr/local/Cellar/sdl2/2.28.5/lib/cmake/SDL2
+        echo ls /usr/local/Cellar/sdl2/2.28.5/lib/cmake/SDL2
+        ls /usr/local/Cellar/sdl2/2.28.5/lib/cmake/SDL2
 
     - name: Is SDL2 not yet cached? Install SDL2 and cache it!
-      if: steps.mac-SDL2-ID-installed-cache2.outputs.cache-hit != 'true'
+      if: steps.mac-SDL2-ID-installed-cache1.outputs.cache-hit != 'true'
       run: |
         echo brew install sdl2
         brew install sdl2
@@ -140,8 +140,8 @@ jobs:
         ls /usr/local/Cellar/sdl2/2.28.5/include/SDL2
         echo ls /usr/local/Cellar/sdl2/2.28.5/lib
         ls /usr/local/Cellar/sdl2/2.28.5/lib
-      # echo ls /usr/local/Cellar/sdl2/2.28.5/lib/cmake/SDL2
-      # ls /usr/local/Cellar/sdl2/2.28.5/lib/cmake/SDL2
+        echo ls /usr/local/Cellar/sdl2/2.28.5/lib/cmake/SDL2
+        ls /usr/local/Cellar/sdl2/2.28.5/lib/cmake/SDL2
 
     - name: CMake configure --- Ninja, Clang, Debug
       run: |
@@ -167,14 +167,14 @@ jobs:
       uses: seanmiddleditch/gha-setup-ninja@master
 
     - name: Cache SDL2
-      id: windows-SDL2-ID-installed-cache2
+      id: windows-SDL2-ID-installed-cache1
       uses: actions/cache@v3
       with:
         path: C:\SDL2
-        key: windows-SDL2-KEY-installed-cache2
+        key: windows-SDL2-KEY-installed-cache1
 
     - name: Is SDL2 cached? Do not install SDL2!
-      if: steps.windows-SDL2-ID-installed-cache2.outputs.cache-hit == 'true'
+      if: steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit == 'true'
       shell: powershell
       run: |
         echo YES cached!
@@ -182,11 +182,18 @@ jobs:
         ls C:\SDL2 -Include SDL2.lib -Recurse -Name
         ls C:\SDL2 -Include SDL2.dll -Recurse -Name
         ls C:\SDL2 -Include SDL2?Config.cmake -Recurse -Name
-      # echo ls C:\SDL2\ -Name
-      # ls C:\SDL2\ -Name
+
+        echo ls C:\SDL2\SDL2-2.28.5\include -Name
+        ls C:\SDL2\SDL2-2.28.5\include -Name
+        echo ls C:\SDL2\SDL2-2.28.5\lib\x86 -Name
+        ls C:\SDL2\SDL2-2.28.5\lib\x86 -Name
+        echo ls C:\SDL2\SDL2-2.28.5\lib\x64 -Name
+        ls C:\SDL2\SDL2-2.28.5\lib\x64 -Name
+        echo ls C:\SDL2\SDL2-2.28.5\cmake -Name
+        ls C:\SDL2\SDL2-2.28.5\cmake -Name
 
     - name: Is SDL2 not yet cached? Install SDL2 and cache it!
-      if: steps.windows-SDL2-ID-installed-cache2.outputs.cache-hit != 'true'
+      if: steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit != 'true'
       shell: powershell
       run: |
         Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
@@ -197,8 +204,15 @@ jobs:
         ls C:\SDL2 -Include SDL2.lib -Recurse -Name
         ls C:\SDL2 -Include SDL2.dll -Recurse -Name
         ls C:\SDL2 -Include SDL2?Config.cmake -Recurse -Name
-      # echo ls C:\SDL2\ -Name
-      # ls C:\SDL2\ -Name
+
+        echo ls C:\SDL2\SDL2-2.28.5\include -Name
+        ls C:\SDL2\SDL2-2.28.5\include -Name
+        echo ls C:\SDL2\SDL2-2.28.5\lib\x86 -Name
+        ls C:\SDL2\SDL2-2.28.5\lib\x86 -Name
+        echo ls C:\SDL2\SDL2-2.28.5\lib\x64 -Name
+        ls C:\SDL2\SDL2-2.28.5\lib\x64 -Name
+        echo ls C:\SDL2\SDL2-2.28.5\cmake -Name
+        ls C:\SDL2\SDL2-2.28.5\cmake -Name
 
     - name: CMake configure --- Ninja, Msvc, Debug
       run: |
