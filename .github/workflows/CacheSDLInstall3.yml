@@ -115,4 +115,3 @@ jobs:
       run: |
         echo cmake --build --preset Ninja-Gnu-Debug
         cmake --build  --preset Ninja-Gnu-Debug
-
