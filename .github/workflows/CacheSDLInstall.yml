@@ -30,47 +30,67 @@ jobs:
     - name: Is SDL2 cached? Do not install SDL2!
       if: steps.linux-SDL2-ID-installed-cache1.outputs.cache-hit == 'true'
       run: |
-        echo ls ~/SDL2/usr
-        ls ~/SDL2/usr
-        echo BEFORE: ls /usr/lib/x86_64-linux-gnu
-        ls /usr/lib/x86_64-linux-gnu
+        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
+        ls ~/SDL2/usr/lib/x86_64-linux-gnu
         echo sudo cp --verbose --force --recursive ~/SDL2/* /
         sudo cp --verbose --force --recursive ~/SDL2/* /
         echo AFTER: ls /usr/lib/x86_64-linux-gnu
         ls /usr/lib/x86_64-linux-gnu
 
-        echo YES cached! Find in ~/SDL2/usr
-        find ~/SDL2/usr/ -iname SDL.h
-        find ~/SDL2/usr/ -iname libSDL2.a
-        find ~/SDL2/usr/ -iname libSDL2.so
-        find ~/SDL2/usr/ -iname SDL2?Config.cmake
-
-        echo ls ~/SDL2/usr/include/SDL2
-        ls ~/SDL2/usr/include/SDL2
-        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
-        ls ~/SDL2/usr/lib/x86_64-linux-gnu
-        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
-        ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
-
-        echo Also find in /usr
+        echo YES cached! Find in /usr
         find /usr/ -iname SDL.h
         find /usr/ -iname libSDL2.a
         find /usr/ -iname libSDL2.so
         find /usr/ -iname SDL2?Config.cmake
 
+      # apt-cache depends --installed libsdl2-dev
     - name: Is SDL2 not yet cached? Install SDL2 and cache it!
       if: steps.linux-SDL2-ID-installed-cache1.outputs.cache-hit != 'true'
       run: |
-        echo BEFORE: ls /usr/lib/x86_64-linux-gnu
-        ls /usr/lib/x86_64-linux-gnu
         echo sudo apt-get install --yes libsdl2-dev
         sudo apt-get install --yes libsdl2-dev
-        echo AFTER: ls /usr/lib/x86_64-linux-gnu
-        ls /usr/lib/x86_64-linux-gnu
 
-        echo Move installed SDL2 from /usr into ~/SDL2/usr
+        echo Move installed SDL2 and its dependencies from /usr into ~/SDL2/usr
         mkdir -p ~/SDL2
-        sudo dpkg -L libsdl2-dev | while IFS= read -r f; do if test -f $f; then echo $f; fi; done | xargs cp --parents --target-directory ~/SDL2/
+
+        packages=(
+          libasound2-dev
+          libdbus-1-dev
+          libdecor-0-dev
+          libdrm-dev
+          libegl1-mesa-dev
+          libgbm-dev
+          libgl-dev
+          libgles-dev
+          libglu1-mesa-dev
+          libibus-1.0-dev
+          libpulse-dev
+          libsdl2-2.0-0
+          libsndio-dev
+          libudev-dev
+          libwayland-dev
+          libx11-dev
+          libxcursor-dev
+          libxext-dev
+          libxfixes-dev
+          libxi-dev
+          libxinerama-dev
+          libxkbcommon-dev
+          libxrandr-dev
+          libxss-dev
+          libxt-dev
+          libxv-dev
+          libxxf86vm-dev
+          libc6
+          libopengl0
+          libx11-6
+        )
+
+        for package in "${packages[@]}"; do
+          echo Caching "$package"
+          sudo dpkg -L "$package" | while IFS= read -r f; do if test -f $f; then echo $f; fi; done | xargs cp --parents --target-directory ~/SDL2/
+        done
+
         echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
         ls ~/SDL2/usr/lib/x86_64-linux-gnu
 
