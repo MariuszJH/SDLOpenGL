@@ -30,13 +30,7 @@ jobs:
     - name: Is SDL2 cached? Do not install SDL2!
       if: steps.linux-SDL2-ID-installed-cache2.outputs.cache-hit == 'true'
       run: |
-        echo YES cached! Find in ~/SDL2/usr
-        echo sudo cp --verbose --force --recursive ~/SDL2/* /
-        sudo cp --verbose --force --recursive ~/SDL2/* /
-        echo AFTER: ls /usr/lib/x86_64-linux-gnu
-        ls /usr/lib/x86_64-linux-gnu
-
-        echo Also find in /usr
+        echo YES cached! Find in /usr
         find /usr/ -iname SDL.h
         find /usr/ -iname libSDL2.a
         find /usr/ -iname libSDL2.so
@@ -48,24 +42,11 @@ jobs:
         echo sudo apt-get install --yes libsdl2-dev
         sudo apt-get install --yes libsdl2-dev
 
-        echo Copy entire /usr with installed SDL2 into ~/SDL2
-        echo sudo cp -r /usr ~/SDL2
-        sudo cp -r /usr ~/SDL2
-        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
-        ls ~/SDL2/usr/lib/x86_64-linux-gnu
+        echo apt-cache rdepends --installed libsdl2-dev
+        apt-cache rdepends --installed libsdl2-dev
 
-        echo NO not yet cached! Find in ~/SDL2/usr
-        find ~/SDL2/usr/ -iname SDL.h
-        find ~/SDL2/usr/ -iname libSDL2.a
-        find ~/SDL2/usr/ -iname libSDL2.so
-        find ~/SDL2/usr/ -iname SDL2?Config.cmake
-
-        echo ls ~/SDL2/usr/include/SDL2
-        ls ~/SDL2/usr/include/SDL2
-        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
-        ls ~/SDL2/usr/lib/x86_64-linux-gnu
-        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
-        ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
+        echo apt-cache depends --installed libsdl2-dev
+        apt-cache depends --installed libsdl2-dev
         
     - name: CMake configure --- Ninja, Gnu, Debug
       run: |
@@ -76,3 +57,4 @@ jobs:
       run: |
         echo cmake --build --preset Ninja-Gnu-Debug
         cmake --build  --preset Ninja-Gnu-Debug
+
