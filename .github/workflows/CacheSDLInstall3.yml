@@ -91,7 +91,7 @@ jobs:
 
         for package in "${packages[@]}"; do
           echo Caching "$package"
-          sudo dpkg -L "$package" | while IFS= read -r f; do if test -f $f; then echo cache $f; fi; done | xargs cp --parents --target-directory ~/SDL2/
+          sudo dpkg -L "$package" | while IFS= read -r f; do if test -f $f; then echo $f; fi; done | xargs cp --parents --target-directory ~/SDL2/
         done
 
         echo NO not yet cached! Find in ~/SDL2/usr
