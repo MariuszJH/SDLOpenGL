@@ -40,28 +40,7 @@ jobs:
       if: steps.linux-SDL2-ID-external-cache1.outputs.cache-hit != 'true'
       run: |
         echo NO not yet cached!
-        find ~/External/SDL2 -iname SDL.h
-        find ~/External/SDL2 -iname libSDL2.a
-        find ~/External/SDL2 -iname libSDL2.so
-        find ~/External/SDL2 -iname SDL2?Config.cmake
-
-    - name: Install SDL2 but do NOT cache it (caching of SDL2 doesn't work on Ubuntu)
-      run: |
-        echo sudo apt-get install --yes libsdl2-dev
-        sudo apt-get install --yes libsdl2-dev
-
-        echo Find in /usr
-        find /usr/ -iname SDL.h
-        find /usr/ -iname libSDL2.a
-        find /usr/ -iname libSDL2.so
-        find /usr/ -iname SDL2?Config.cmake
-
-        echo ls /usr/include/SDL2
-        ls /usr/include/SDL2
-        echo ls /usr/lib/x86_64-linux-gnu
-        ls /usr/lib/x86_64-linux-gnu
-        echo ls /usr/lib/x86_64-linux-gnu/cmake/SDL2
-        ls /usr/lib/x86_64-linux-gnu/cmake/SDL2
+        ls 
         
     - name: CMake configure --- Ninja, Gnu, Debug
       run: |
@@ -110,10 +89,7 @@ jobs:
       if: steps.mac-SDL2-ID-external-cache1.outputs.cache-hit != 'true'
       run: |
         echo NO not yet cached!
-        find ~/External/SDL2 -iname SDL.h
-        find ~/External/SDL2 -iname libSDL2.a
-        find ~/External/SDL2 -iname libSDL2.so
-        find ~/External/SDL2 -iname SDL2?Config.cmake
+        ls 
         
       # echo ls ~/External/SDL2/2.28.5/include/SDL2
       # ls ~/External/SDL2/2.28.5/include/SDL2
@@ -152,7 +128,7 @@ jobs:
         path: External/SDL2
         key: windows-SDL2-KEY-external-cache1
 
-    - name: Is SDL2 cached? Do not install SDL2!
+    - name: Is SDL2 cached?
       if: steps.windows-SDL2-ID-external-cache1.outputs.cache-hit == 'true'
       shell: bash
       run: |
@@ -176,10 +152,7 @@ jobs:
       shell: bash
       run: |
         echo NO not yet cached!
-        find External/SDL2 -iname SDL.h
-        find External/SDL2 -iname libSDL2.a
-        find External/SDL2 -iname libSDL2.so
-        find External/SDL2 -iname SDL2?Config.cmake
+        ls
 
     - name: CMake configure --- Ninja, Msvc, Debug
       run: |
