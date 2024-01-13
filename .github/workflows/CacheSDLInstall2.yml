@@ -1,0 +1,78 @@
+name: Cache SDL2 install2
+
+on:
+  push: 
+    branches: [master, develop]
+  pull_request:
+    branches: [master, develop]
+
+env:
+  projectName: SDLOpenGL
+  SDL_VERSION: 2.28.5
+
+jobs:
+  build-on-linux:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@master
+
+    - name: Cache SDL2
+      id: linux-SDL2-ID-installed-cache2
+      uses: actions/cache@v3
+      with:
+        path: ~/SDL2/usr/
+        key: linux-SDL2-KEY-installed-cache2
+
+    - name: Is SDL2 cached? Do not install SDL2!
+      if: steps.linux-SDL2-ID-installed-cache2.outputs.cache-hit == 'true'
+      run: |
+        echo YES cached! Find in ~/SDL2/usr
+        echo sudo cp --verbose --force --recursive ~/SDL2/* /
+        sudo cp --verbose --force --recursive ~/SDL2/* /
+        echo AFTER: ls /usr/lib/x86_64-linux-gnu
+        ls /usr/lib/x86_64-linux-gnu
+
+        echo Also find in /usr
+        find /usr/ -iname SDL.h
+        find /usr/ -iname libSDL2.a
+        find /usr/ -iname libSDL2.so
+        find /usr/ -iname SDL2?Config.cmake
+
+    - name: Is SDL2 not yet cached? Install SDL2 and cache it!
+      if: steps.linux-SDL2-ID-installed-cache2.outputs.cache-hit != 'true'
+      run: |
+        echo sudo apt-get install --yes libsdl2-dev
+        sudo apt-get install --yes libsdl2-dev
+
+        echo Copy entire /usr with installed SDL2 into ~/SDL2
+        echo sudo cp -r /usr ~/SDL2
+        sudo cp -r /usr ~/SDL2
+        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
+        ls ~/SDL2/usr/lib/x86_64-linux-gnu
+
+        echo NO not yet cached! Find in ~/SDL2/usr
+        find ~/SDL2/usr/ -iname SDL.h
+        find ~/SDL2/usr/ -iname libSDL2.a
+        find ~/SDL2/usr/ -iname libSDL2.so
+        find ~/SDL2/usr/ -iname SDL2?Config.cmake
+
+        echo ls ~/SDL2/usr/include/SDL2
+        ls ~/SDL2/usr/include/SDL2
+        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu
+        ls ~/SDL2/usr/lib/x86_64-linux-gnu
+        echo ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
+        ls ~/SDL2/usr/lib/x86_64-linux-gnu/cmake/SDL2
+        
+    - name: CMake configure --- Ninja, Gnu, Debug
+      run: |
+        echo cmake --preset Ninja-Gnu-Debug
+        cmake --preset Ninja-Gnu-Debug
+
+    - name: CMake build --- Ninja, Gnu, Debug
+      run: |
+        echo cmake --build --preset Ninja-Gnu-Debug
+        cmake --build  --preset Ninja-Gnu-Debug
