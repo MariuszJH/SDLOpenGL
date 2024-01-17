@@ -11,7 +11,7 @@ if the package is not on the standard search path nor in CMAKE_INSTALL_PREFIX
 if (WIN32)
     # set(${packageName}_DIR C:/Packages/SDL2-2.28.3/cmake)
     # set(packageVersion 2.28.3)
-    # set(${packageName}_DIR C:/SDL2/SDL2-2.28.5/cmake)
+    set(${packageName}_DIR C:/SDL2/SDL2-2.28.5/cmake)
 elseif(LINUX)
     # set(${packageName}_DIR /usr/lib/x86_64-linux-gnu/cmake/SDL2)
     set(packageVersion 2.0.20...2.28.5)

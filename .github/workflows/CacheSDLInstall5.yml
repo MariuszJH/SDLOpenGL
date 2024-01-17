@@ -45,8 +45,8 @@ jobs:
         find /usr/lib/x86_64-linux-gnu -iname libSDL2.so
         find /usr/lib/x86_64-linux-gnu/cmake/SDL2 -iname SDL2?Config.cmake
         
-        echo ls /usr/include/SDL2/2.28.5/include/SDL2
-        ls /usr/include/SDL2/2.28.5/include/SDL2
+        echo ls /usr/include/SDL2
+        ls /usr/include/SDL2
         echo ls /usr/lib/x86_64-linux-gnu
         ls /usr/lib/x86_64-linux-gnu
         echo ls /usr/lib/x86_64-linux-gnu/cmake/SDL2
