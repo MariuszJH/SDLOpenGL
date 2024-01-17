@@ -21,14 +21,14 @@ jobs:
       uses: seanmiddleditch/gha-setup-ninja@master
 
     - name: Cache SDL2
-      id: linux-SDL2-ID-external-cache1
+      id: linux-SDL2-ID-external-cache2
       uses: actions/cache@v3
       with:
         path: External/SDL2
-        key: linux-SDL2-KEY-external-cache1
+        key: linux-SDL2-KEY-external-cache2
 
     - name: Is SDL2 cached?
-      if: steps.linux-SDL2-ID-external-cache1.outputs.cache-hit == 'true'
+      if: steps.linux-SDL2-ID-external-cache2.outputs.cache-hit == 'true'
       run: |
         echo YES cached!
         find External/SDL2 -iname SDL.h
@@ -37,7 +37,7 @@ jobs:
         find External/SDL2 -iname SDL2?Config.cmake
 
     - name: Is SDL2 not yet cached?
-      if: steps.linux-SDL2-ID-external-cache1.outputs.cache-hit != 'true'
+      if: steps.linux-SDL2-ID-external-cache2.outputs.cache-hit != 'true'
       run: |
         echo NO not yet cached!
         ls External
@@ -73,14 +73,14 @@ jobs:
       uses: seanmiddleditch/gha-setup-ninja@master
 
     - name: Cache SDL2
-      id: mac-SDL2-ID-external-cache1
+      id: mac-SDL2-ID-external-cache2
       uses: actions/cache@v3
       with:
         path: External/SDL2
-        key: mac-SDL2-KEY-external-cache1
+        key: mac-SDL2-KEY-external-cache2
 
     - name: Is SDL2 cached?
-      if: steps.mac-SDL2-ID-external-cache1.outputs.cache-hit == 'true'
+      if: steps.mac-SDL2-ID-external-cache2.outputs.cache-hit == 'true'
       run: |
         echo YES cached!
         find External/SDL2 -iname SDL.h
@@ -96,7 +96,7 @@ jobs:
       # ls External/SDL2/2.28.5/lib/cmake/SDL2
 
     - name: Is SDL2 not yet cached?
-      if: steps.mac-SDL2-ID-external-cache1.outputs.cache-hit != 'true'
+      if: steps.mac-SDL2-ID-external-cache2.outputs.cache-hit != 'true'
       run: |
         echo NO not yet cached!
         ls External
@@ -142,14 +142,14 @@ jobs:
       uses: seanmiddleditch/gha-setup-ninja@master
 
     - name: Cache SDL2
-      id: windows-SDL2-ID-external-cache1
+      id: windows-SDL2-ID-external-cache2
       uses: actions/cache@v3
       with:
         path: External/SDL2
-        key: windows-SDL2-KEY-external-cache1
+        key: windows-SDL2-KEY-external-cache2
 
     - name: Is SDL2 cached?
-      if: steps.windows-SDL2-ID-external-cache1.outputs.cache-hit == 'true'
+      if: steps.windows-SDL2-ID-external-cache2.outputs.cache-hit == 'true'
       shell: bash
       run: |
         echo YES cached!
@@ -168,7 +168,7 @@ jobs:
       # ls External/SDL2\SDL2-2.28.5\cmake -Name
 
     - name: Is SDL2 not yet cached?
-      if: steps.windows-SDL2-ID-external-cache1.outputs.cache-hit != 'true'
+      if: steps.windows-SDL2-ID-external-cache2.outputs.cache-hit != 'true'
       shell: bash
       run: |
         echo NO not yet cached!

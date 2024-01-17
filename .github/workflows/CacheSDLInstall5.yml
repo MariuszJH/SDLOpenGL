@@ -24,17 +24,17 @@ jobs:
       run: sudo chown root /usr/bin/tar && sudo chmod u+s /usr/bin/tar
 
     - name: Cache SDL2
-      id: mac-SDL2-ID-installed-cache1
+      id: linux-SDL2-ID-installed-cache2
       uses: actions/cache@v3
       with:
         path: |
           /usr/include/SDL2
           /usr/lib/x86_64-linux-gnu/libSDL2.*
           /usr/lib/x86_64-linux-gnu/cmake/SDL2
-        key: mac-SDL2-KEY-installed-cache1
+        key: linux-SDL2-KEY-installed-cache2
 
     - name: Install SDL2 since it is not yet cached
-      if: steps.linux-SDL2-ID-installed-cache1.outputs.cache-hit != 'true'
+      if: steps.linux-SDL2-ID-installed-cache2.outputs.cache-hit != 'true'
       run: |
         echo sudo apt-get install --yes libsdl2-dev
         sudo apt-get install --yes libsdl2-dev
@@ -53,7 +53,7 @@ jobs:
         ls /usr/lib/x86_64-linux-gnu/cmake/SDL2
 
     - name: Restore SDL2 from cache; do not reinstall it!
-      if: steps.linux-SDL2-ID-installed-cache1.outputs.cache-hit == 'true'
+      if: steps.linux-SDL2-ID-installed-cache2.outputs.cache-hit == 'true'
       run: |
         echo YES cached!
         find /usr/include/SDL2 -iname SDL.h
@@ -99,14 +99,14 @@ jobs:
       uses: seanmiddleditch/gha-setup-ninja@master
 
     - name: Cache SDL2
-      id: mac-SDL2-ID-installed-cache1
+      id: mac-SDL2-ID-installed-cache2
       uses: actions/cache@v3
       with:
         path: /usr/local/Cellar/sdl2
-        key: mac-SDL2-KEY-installed-cache1
+        key: mac-SDL2-KEY-installed-cache2
 
     - name: Install SDL2 since it is not yet cached
-      if: steps.linux-SDL2-ID-installed-cache1.outputs.cache-hit != 'true'
+      if: steps.mac-SDL2-ID-installed-cache2.outputs.cache-hit != 'true'
       run: |
         echo brew install sdl2
         brew install sdl2
@@ -125,7 +125,7 @@ jobs:
         ls /usr/local/Cellar/sdl2/2.28.5/lib/cmake/SDL2
 
     - name: Restore SDL2 from cache; do not reinstall it!
-      if: steps.linux-SDL2-ID-installed-cache1.outputs.cache-hit == 'true'
+      if: steps.mac-SDL2-ID-installed-cache2.outputs.cache-hit == 'true'
       run: |
         echo YES cached!
         find /usr/local/Cellar/sdl2 -iname SDL.h
@@ -174,14 +174,14 @@ jobs:
       uses: seanmiddleditch/gha-setup-ninja@master
 
     - name: Cache SDL2
-      id: windows-SDL2-ID-installed-cache1
+      id: windows-SDL2-ID-installed-cache2
       uses: actions/cache@v3
       with:
         path: C:\SDL2
-        key: windows-SDL2-KEY-installed-cache1
+        key: windows-SDL2-KEY-installed-cache2
 
     - name: Install SDL2 since it is not yet cached
-      if: steps.linux-SDL2-ID-installed-cache1.outputs.cache-hit != 'true'
+      if: steps.windows-SDL2-ID-installed-cache2.outputs.cache-hit != 'true'
       shell: powershell
       run: |
         Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
@@ -203,7 +203,7 @@ jobs:
         ls C:\SDL2\SDL2-2.28.5\cmake -Name
 
     - name: Restore SDL2 from cache; do not reinstall it!
-      if: steps.linux-SDL2-ID-installed-cache1.outputs.cache-hit == 'true'
+      if: steps.windows-SDL2-ID-installed-cache2.outputs.cache-hit == 'true'
       shell: powershell
       run: |
         echo YES cached!
