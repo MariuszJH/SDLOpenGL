@@ -44,13 +44,23 @@ jobs:
         
     - name: CMake configure --- Ninja, Gnu, Debug
       run: |
-        echo cmake --preset Ninja-Gnu-Debug -D SDL2_DIR=External/SDL2/VisualC/pkg-support/cmake
-        cmake --preset Ninja-Gnu-Debug -D SDL2_DIR=External/SDL2/VisualC/pkg-support/cmake
+        echo cmake --preset Ninja-Gnu-Debug
+        cmake --preset Ninja-Gnu-Debug
 
     - name: CMake build --- Ninja, Gnu, Debug
       run: |
         echo cmake --build --preset Ninja-Gnu-Debug
         cmake --build  --preset Ninja-Gnu-Debug
+        
+    - name: CMake configure --- Ninja, Gnu, Release
+      run: |
+        echo cmake --preset Ninja-Gnu-Release
+        cmake --preset Ninja-Gnu-Release
+
+    - name: CMake build --- Ninja, Gnu, Release
+      run: |
+        echo cmake --build --preset Ninja-Gnu-Release
+        cmake --build  --preset Ninja-Gnu-Release
 
 
   build-on-macos:
@@ -100,13 +110,23 @@ jobs:
 
     - name: CMake configure --- Ninja, Clang, Debug
       run: |
-        echo cmake --preset Ninja-Clang-Debug -D SDL2_DIR=External/SDL2/Xcode/SDL/pkg-support/resources/CMake
-        cmake --preset Ninja-Clang-Debug -D SDL2_DIR=External/SDL2/Xcode/SDL/pkg-support/resources/CMake
+        echo cmake --preset Ninja-Clang-Debug
+        cmake --preset Ninja-Clang-Debug
 
     - name: CMake build --- Ninja, Clang, Debug
       run: |
         echo cmake --build --preset Ninja-Clang-Debug
         cmake --build --preset Ninja-Clang-Debug
+
+    - name: CMake configure --- Ninja, Clang, Release
+      run: |
+        echo cmake --preset Ninja-Clang-Release
+        cmake --preset Ninja-Clang-Release
+
+    - name: CMake build --- Ninja, Clang, Release
+      run: |
+        echo cmake --build --preset Ninja-Clang-Release
+        cmake --build --preset Ninja-Clang-Release
 
 
   build-on-windows:
@@ -156,10 +176,20 @@ jobs:
 
     - name: CMake configure --- Ninja, Msvc, Debug
       run: |
-        echo cmake --preset Ninja-Msvc-Debug -D SDL2_DIR=External/SDL2/mingw/pkg-support/cmake
-        cmake --preset Ninja-Msvc-Debug -D SDL2_DIR=External/SDL2/mingw/pkg-support/cmake
+        echo cmake --preset Ninja-Msvc-Debug
+        cmake --preset Ninja-Msvc-Debug
 
     - name: CMake build --- Ninja, Msvc, Debug
       run: |
         echo cmake --build --preset Ninja-Msvc-Debug
         cmake --build --preset Ninja-Msvc-Debug
+
+    - name: CMake configure --- Ninja, Msvc, Release
+      run: |
+        echo cmake --preset Ninja-Msvc-Release
+        cmake --preset Ninja-Msvc-Release
+
+    - name: CMake build --- Ninja, Msvc, Release
+      run: |
+        echo cmake --build --preset Ninja-Msvc-Release
+        cmake --build --preset Ninja-Msvc-Release
