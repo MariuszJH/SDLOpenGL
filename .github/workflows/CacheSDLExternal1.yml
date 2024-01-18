@@ -20,27 +20,16 @@ jobs:
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@master
 
-    # - name: Cache SDL2
-    #   id: linux-SDL2-ID-external-cache2
-    #   uses: actions/cache@v3
-    #   with:
-    #     path: External/SDL2
-    #     key: linux-SDL2-KEY-external-cache2
-
-    # - name: Is SDL2 cached?
-    #   if: steps.linux-SDL2-ID-external-cache2.outputs.cache-hit == 'true'
-    #   run: |
-    #     echo YES cached!
-    #     find External/SDL2 -iname SDL.h
-    #     find External/SDL2 -iname libSDL2.a
-    #     find External/SDL2 -iname libSDL2.so
-    #     find External/SDL2 -iname SDL2?Config.cmake
-
-    # - name: Is SDL2 not yet cached?
-    #   if: steps.linux-SDL2-ID-external-cache2.outputs.cache-hit != 'true'
-    #   run: |
-    #     echo NO not yet cached!
-    #     ls External
+    - name: Has SDL2 been downloaded from remote repo?
+      shell: bash
+      run: |
+        if [[ -d External/SDL2 ]]; then
+          echo directory exists!
+          echo "externalProjectDir=existsYes" >> $GITHUB_ENV
+        else
+          echo directory does not exist!
+          echo "externalProjectDir=existsNo" >> $GITHUB_ENV
+        fi
         
     - name: CMake configure --- Ninja, Gnu, Debug
       run: |
@@ -53,6 +42,29 @@ jobs:
       run: |
         echo cmake --build --preset Ninja-Gnu-Debug
         cmake --build  --preset Ninja-Gnu-Debug
+
+    - name: Cache SDL2
+      if: ${{env.externalProjectDir == 'existsYes'}}
+      id: linux-SDL2-ID-external-cache3
+      uses: actions/cache@v3
+      with:
+        path: External/SDL2
+        key: linux-SDL2-KEY-external-cache3
+
+    - name: Is SDL2 cached?
+      if: steps.linux-SDL2-ID-external-cache3.outputs.cache-hit == 'true'
+      run: |
+        echo YES cached!
+        find External/SDL2 -iname SDL.h
+        find External/SDL2 -iname libSDL2.a
+        find External/SDL2 -iname libSDL2.so
+        find External/SDL2 -iname SDL2?Config.cmake
+
+    - name: Is SDL2 not yet cached?
+      if: steps.linux-SDL2-ID-external-cache3.outputs.cache-hit != 'true'
+      run: |
+        echo NO not yet cached!
+        ls External
         
     - name: CMake configure --- Ninja, Gnu, Release
       run: |
@@ -76,42 +88,16 @@ jobs:
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@master
 
-    # - name: Cache SDL2
-    #   id: mac-SDL2-ID-external-cache2
-    #   uses: actions/cache@v3
-    #   with:
-    #     path: External/SDL2
-    #     key: mac-SDL2-KEY-external-cache2
-
-    # - name: Is SDL2 cached?
-    #   if: steps.mac-SDL2-ID-external-cache2.outputs.cache-hit == 'true'
-    #   run: |
-    #     echo YES cached!
-    #     find External/SDL2 -iname SDL.h
-    #     find External/SDL2 -iname libSDL2.a
-    #     find External/SDL2 -iname libSDL2.so
-    #     find External/SDL2 -iname SDL2?Config.cmake
-        
-      # echo ls External/SDL2/2.28.5/include/SDL2
-      # ls External/SDL2/2.28.5/include/SDL2
-      # echo ls External/SDL2/2.28.5/lib
-      # ls External/SDL2/2.28.5/lib
-      # echo ls External/SDL2/2.28.5/lib/cmake/SDL2
-      # ls External/SDL2/2.28.5/lib/cmake/SDL2
-
-    # - name: Is SDL2 not yet cached?
-    #   if: steps.mac-SDL2-ID-external-cache2.outputs.cache-hit != 'true'
-    #   run: |
-    #     echo NO not yet cached!
-    #     ls External
-        
-      # echo ls External/SDL2/2.28.5/include/SDL2
-      # ls External/SDL2/2.28.5/include/SDL2
-      # echo ls External/SDL2/2.28.5/lib
-      # ls External/SDL2/2.28.5/lib
-      # echo ls External/SDL2/2.28.5/lib/cmake/SDL2
-      # ls External/SDL2/2.28.5/lib/cmake/SDL2
-
+    - name: Has SDL2 been downloaded from remote repo?
+      shell: bash
+      run: |
+        if [[ -d External/SDL2 ]]; then
+          echo directory exists!
+          echo "externalProjectDir=existsYes" >> $GITHUB_ENV
+        else
+          echo directory does not exist!
+          echo "externalProjectDir=existsNo" >> $GITHUB_ENV
+        fi
 
     - name: CMake configure --- Ninja, Clang, Debug
       run: |
@@ -124,6 +110,36 @@ jobs:
       run: |
         echo cmake --build --preset Ninja-Clang-Debug
         cmake --build --preset Ninja-Clang-Debug
+
+    - name: Cache SDL2
+      if: ${{env.externalProjectDir == 'existsYes'}}
+      id: mac-SDL2-ID-external-cache3
+      uses: actions/cache@v3
+      with:
+        path: External/SDL2
+        key: mac-SDL2-KEY-external-cache3
+
+    - name: Is SDL2 cached?
+      if: steps.mac-SDL2-ID-external-cache3.outputs.cache-hit == 'true'
+      run: |
+        echo YES cached!
+        find External/SDL2 -iname SDL.h
+        find External/SDL2 -iname libSDL2.a
+        find External/SDL2 -iname libSDL2.so
+        find External/SDL2 -iname SDL2?Config.cmake
+
+      # echo ls External/SDL2/2.28.5/include/SDL2
+      # ls External/SDL2/2.28.5/include/SDL2
+      # echo ls External/SDL2/2.28.5/lib
+      # ls External/SDL2/2.28.5/lib
+      # echo ls External/SDL2/2.28.5/lib/cmake/SDL2
+      # ls External/SDL2/2.28.5/lib/cmake/SDL2
+
+    - name: Is SDL2 not yet cached?
+      if: steps.mac-SDL2-ID-external-cache3.outputs.cache-hit != 'true'
+      run: |
+        echo NO not yet cached!
+        ls External
 
     - name: CMake configure --- Ninja, Clang, Release
       run: |
@@ -149,39 +165,16 @@ jobs:
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@master
 
-    # - name: Cache SDL2
-    #   id: windows-SDL2-ID-external-cache2
-    #   uses: actions/cache@v3
-    #   with:
-    #     path: External/SDL2
-    #     key: windows-SDL2-KEY-external-cache2
-
-    # - name: Is SDL2 cached?
-    #   if: steps.windows-SDL2-ID-external-cache2.outputs.cache-hit == 'true'
-    #   shell: bash
-    #   run: |
-    #     echo YES cached!
-    #     find External/SDL2 -iname SDL.h
-    #     find External/SDL2 -iname libSDL2.a
-    #     find External/SDL2 -iname libSDL2.so
-    #     find External/SDL2 -iname SDL2?Config.cmake
-
-      # echo ls External/SDL2\SDL2-2.28.5\include -Name
-      # ls External/SDL2\SDL2-2.28.5\include -Name
-      # echo ls External/SDL2\SDL2-2.28.5\lib\x86 -Name
-      # ls External/SDL2\SDL2-2.28.5\lib\x86 -Name
-      # echo ls External/SDL2\SDL2-2.28.5\lib\x64 -Name
-      # ls External/SDL2\SDL2-2.28.5\lib\x64 -Name
-      # echo ls External/SDL2\SDL2-2.28.5\cmake -Name
-      # ls External/SDL2\SDL2-2.28.5\cmake -Name
-
-    # - name: Is SDL2 not yet cached?
-    #   if: steps.windows-SDL2-ID-external-cache2.outputs.cache-hit != 'true'
-    #   shell: bash
-    #   run: |
-    #     echo NO not yet cached!
-    #     ls External
-
+    - name: Has SDL2 been downloaded from remote repo?
+      shell: bash
+      run: |
+        if [[ -d External/SDL2 ]]; then
+          echo directory exists!
+          echo "externalProjectDir=existsYes" >> $GITHUB_ENV
+        else
+          echo directory does not exist!
+          echo "externalProjectDir=existsNo" >> $GITHUB_ENV
+        fi
 
     - name: CMake configure --- Ninja, Msvc, Debug
       run: |
@@ -194,6 +187,38 @@ jobs:
       run: |
         echo cmake --build --preset Ninja-Msvc-Debug
         cmake --build --preset Ninja-Msvc-Debug
+
+    - name: Cache SDL2
+      if: ${{env.externalProjectDir == 'existsYes'}}
+      id: windows-SDL2-ID-external-cache3
+      uses: actions/cache@v3
+      with:
+        path: External/SDL2
+        key: windows-SDL2-KEY-external-cache3
+
+    - name: Is SDL2 cached?
+      if: steps.windows-SDL2-ID-external-cache3.outputs.cache-hit == 'true'
+      run: |
+        echo YES cached!
+        find External/SDL2 -iname SDL.h
+        find External/SDL2 -iname libSDL2.a
+        find External/SDL2 -iname libSDL2.so
+        find External/SDL2 -iname SDL2?Config.cmake
+
+      # echo ls External/SDL2/SDL2-2.28.5/include -Name
+      # ls External/SDL2/SDL2-2.28.5/include -Name
+      # echo ls External/SDL2/SDL2-2.28.5/lib/x86 -Name
+      # ls External/SDL2/SDL2-2.28.5/lib/x86 -Name
+      # echo ls External/SDL2/SDL2-2.28.5/lib/x64 -Name
+      # ls External/SDL2/SDL2-2.28.5/lib/x64 -Name
+      # echo ls External/SDL2/SDL2-2.28.5/cmake -Name
+      # ls External/SDL2/SDL2-2.28.5/cmake -Name
+
+    - name: Is SDL2 not yet cached?
+      if: steps.windows-SDL2-ID-external-cache3.outputs.cache-hit != 'true'
+      run: |
+        echo NO not yet cached!
+        ls External
 
     - name: CMake configure --- Ninja, Msvc, Release
       run: |
