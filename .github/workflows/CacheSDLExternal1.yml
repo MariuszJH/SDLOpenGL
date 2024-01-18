@@ -56,10 +56,10 @@ jobs:
         
     - name: CMake configure --- Ninja, Gnu, Release
       run: |
-        echo ls External/SDL2
-        ls External/SDL2
         echo cmake --preset Ninja-Gnu-Release
         cmake --preset Ninja-Gnu-Release
+        echo ls External/SDL2
+        ls External/SDL2
 
     - name: CMake build --- Ninja, Gnu, Release
       run: |
@@ -126,10 +126,10 @@ jobs:
 
     - name: CMake configure --- Ninja, Clang, Release
       run: |
-        echo ls External/SDL2
-        ls External/SDL2
         echo cmake --preset Ninja-Clang-Release
         cmake --preset Ninja-Clang-Release
+        echo ls External/SDL2
+        ls External/SDL2
 
     - name: CMake build --- Ninja, Clang, Release
       run: |
@@ -196,10 +196,10 @@ jobs:
 
     - name: CMake configure --- Ninja, Msvc, Release
       run: |
-        echo ls External/SDL2
-        ls External/SDL2
         echo cmake --preset Ninja-Msvc-Release
         cmake --preset Ninja-Msvc-Release
+        echo ls External/SDL2
+        ls External/SDL2
 
     - name: CMake build --- Ninja, Msvc, Release
       run: |
