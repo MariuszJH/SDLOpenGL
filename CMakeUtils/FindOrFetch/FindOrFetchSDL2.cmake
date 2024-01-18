@@ -26,7 +26,7 @@ elseif(UNIX AND NOT APPLE)
 endif()
 
 # Omit REQUIRED keyword so as to be able to fetch the package if it is not installed
-find_package(${packageName} ${packageVersion})
+# find_package(${packageName} ${packageVersion})
 
 if(${packageName}_FOUND)
     message(STATUS "${packageName}_FOUND: ${${packageName}_FOUND}")
@@ -39,9 +39,9 @@ else()
     set(externalProjectDir ${CMAKE_SOURCE_DIR}/External/SDL2)
 
     if(EXISTS ${externalProjectDir} AND IS_DIRECTORY ${externalProjectDir})
-        message(STATUS "Not fetching ${packageName} again since already downloaded locally  into ${externalProjectDir}")
+        message(STATUS "Not fetching ${packageName} again since it's already downloaded locally into ${externalProjectDir}")
 
-        FetchContent_Declare(googletest
+        FetchContent_Declare(sdl2
             SOURCE_DIR      ${externalProjectDir}
             # GIT_PROGRESS    TRUE
             # USES_TERMINAL_DOWNLOAD TRUE   # <---- only used by Ninja generator

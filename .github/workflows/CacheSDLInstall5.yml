@@ -53,6 +53,9 @@ jobs:
         echo ls /usr/lib/x86_64-linux-gnu/cmake/SDL2
         ls /usr/lib/x86_64-linux-gnu/cmake/SDL2
 
+        echo apt-cache depends --installed libsdl2-dev
+        apt-cache depends --installed libsdl2-dev
+
     - name: Restore SDL2 from cache; do not reinstall it!
       if: steps.linux-SDL2-ID-installed-cache2.outputs.cache-hit == 'true'
       run: |
