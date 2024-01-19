@@ -305,7 +305,7 @@ jobs:
           echo directory does not exist!
           echo "externalProjectDir=existsNo" >> $GITHUB_ENV
         fi
-        
+
     - name: Cache SDL2 again!
       if: ${{env.externalProjectDir == 'existsYes'}}
       id: windows-SDL2-ID-external-cache3b
@@ -349,3 +349,4 @@ jobs:
       run: |
         echo cmake --build --preset Ninja-Msvc-Release
         cmake --build --preset Ninja-Msvc-Release
+
