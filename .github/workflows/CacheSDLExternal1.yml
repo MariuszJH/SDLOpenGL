@@ -66,6 +66,17 @@ jobs:
         echo cmake --build --preset Ninja-Gnu-Debug
         cmake --build  --preset Ninja-Gnu-Debug
 
+    - name: Has SDL2 been downloaded from remote repo (again)?
+      shell: bash
+      run: |
+        if [[ -d External/SDL2 ]]; then
+          echo directory exists!
+          echo "externalProjectDir=existsYes" >> $GITHUB_ENV
+        else
+          echo directory does not exist!
+          echo "externalProjectDir=existsNo" >> $GITHUB_ENV
+        fi
+
     - name: Cache SDL2 again
       if: ${{env.externalProjectDir == 'existsYes'}}
       id: linux-SDL2-ID-external-cache3b
@@ -163,6 +174,17 @@ jobs:
       run: |
         echo cmake --build --preset Ninja-Clang-Debug
         cmake --build --preset Ninja-Clang-Debug
+
+    - name: Has SDL2 been downloaded from remote repo (again)?
+      shell: bash
+      run: |
+        if [[ -d External/SDL2 ]]; then
+          echo directory exists!
+          echo "externalProjectDir=existsYes" >> $GITHUB_ENV
+        else
+          echo directory does not exist!
+          echo "externalProjectDir=existsNo" >> $GITHUB_ENV
+        fi
 
     - name: Cache SDL2 again!
       if: ${{env.externalProjectDir == 'existsYes'}}
@@ -273,6 +295,17 @@ jobs:
         echo cmake --build --preset Ninja-Msvc-Debug
         cmake --build --preset Ninja-Msvc-Debug
 
+    - name: Has SDL2 been downloaded from remote repo (again)?
+      shell: bash
+      run: |
+        if [[ -d External/SDL2 ]]; then
+          echo directory exists!
+          echo "externalProjectDir=existsYes" >> $GITHUB_ENV
+        else
+          echo directory does not exist!
+          echo "externalProjectDir=existsNo" >> $GITHUB_ENV
+        fi
+        
     - name: Cache SDL2 again!
       if: ${{env.externalProjectDir == 'existsYes'}}
       id: windows-SDL2-ID-external-cache3b
