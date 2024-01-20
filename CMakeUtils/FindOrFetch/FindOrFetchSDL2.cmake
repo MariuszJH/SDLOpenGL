@@ -43,8 +43,8 @@ else()
 
         FetchContent_Declare(sdl2
             SOURCE_DIR      ${externalProjectDir}
-            # GIT_PROGRESS    TRUE
-            # USES_TERMINAL_DOWNLOAD TRUE   # <---- only used by Ninja generator
+            GIT_PROGRESS    TRUE
+            USES_TERMINAL_DOWNLOAD TRUE   # <---- only used by Ninja generator
         )
 
     else()
