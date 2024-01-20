@@ -20,29 +20,18 @@ jobs:
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@master
 
-    - name: Grant tar root ownership and execution (needed to untar cached objects)
-      run: sudo chown root /usr/bin/tar && sudo chmod u+s /usr/bin/tar
-
-    - name: Cache SDL2
-      id: linux-SDL2-ID-installed-cache3
-      uses: actions/cache@v3
-      with:
-        path: |
-          /usr/include/SDL2
-          /usr/lib/x86_64-linux-gnu/*SDL2*
-          /usr/lib/x86_64-linux-gnu/cmake/SDL2
-        key: linux-SDL2-KEY-installed-cache3
-
-    - name: Install SDL2 since it is not yet cached
-      if: steps.linux-SDL2-ID-installed-cache3.outputs.cache-hit != 'true'
+    - name: Install SDL2 (do not cache it for Ubuntu since too many dependencies)
       run: |
         echo sudo apt-get install --yes libsdl2-dev
         sudo apt-get install --yes libsdl2-dev
 
-        echo NO not yet cached!
+        echo find /usr/include/SDL2 -iname SDL.h
         find /usr/include/SDL2 -iname SDL.h
+        echo find /usr/lib/x86_64-linux-gnu -iname libSDL2.a
         find /usr/lib/x86_64-linux-gnu -iname libSDL2.a
+        echo find /usr/lib/x86_64-linux-gnu -iname libSDL2.so
         find /usr/lib/x86_64-linux-gnu -iname libSDL2.so
+        echo find /usr/lib/x86_64-linux-gnu/cmake/SDL2 -iname SDL2?Config.cmake
         find /usr/lib/x86_64-linux-gnu/cmake/SDL2 -iname SDL2?Config.cmake
         
         echo ls /usr/include/SDL2
@@ -52,24 +41,10 @@ jobs:
         echo ls /usr/lib/x86_64-linux-gnu/cmake/SDL2
         ls /usr/lib/x86_64-linux-gnu/cmake/SDL2
 
+    - name: Show dependencies of SDL2
+      run: |
         echo apt-cache depends --installed libsdl2-dev
         apt-cache depends --installed libsdl2-dev
-
-    - name: Restore SDL2 from cache; do not reinstall it!
-      if: steps.linux-SDL2-ID-installed-cache3.outputs.cache-hit == 'true'
-      run: |
-        echo YES cached!
-        find /usr/include/SDL2 -iname SDL.h
-        find /usr/lib/x86_64-linux-gnu -iname libSDL2.a
-        find /usr/lib/x86_64-linux-gnu -iname libSDL2.so
-        find /usr/lib/x86_64-linux-gnu/cmake/SDL2 -iname SDL2?Config.cmake
-        
-        echo ls /usr/include/SDL2
-        ls /usr/include/SDL2
-        echo ls /usr/lib/x86_64-linux-gnu
-        ls /usr/lib/x86_64-linux-gnu
-        echo ls /usr/lib/x86_64-linux-gnu/cmake/SDL2
-        ls /usr/lib/x86_64-linux-gnu/cmake/SDL2
 
     - name: CMake configure --- Ninja, Gnu, Debug
       run: |
