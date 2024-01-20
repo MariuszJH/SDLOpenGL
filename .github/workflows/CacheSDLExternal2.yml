@@ -20,16 +20,6 @@ jobs:
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@master
 
-    - name: Has SDL2 been downloaded from remote repo?
-      shell: bash
-      run: |
-        if [[ -d External/SDL2 ]]; then
-          mkdir -p External/SDL2
-          echo directory exists!
-        else
-          echo directory does not exist!
-        fi
-
     - name: Cache SDL2
       id: linux-SDL2-ID-external-cache5
       uses: actions/cache@v3
@@ -38,6 +28,15 @@ jobs:
           if [[ -d External/SDL2 ]]; then
             External/SDL2
         key: linux-SDL2-KEY-external-cache5
+
+    - name: Has SDL2 been downloaded from remote repo?
+      shell: bash
+      run: |
+        if [[ -d External/SDL2 ]]; then
+          echo directory exists!
+        else
+          echo directory does not exist!
+        fi
 
     - name: Is SDL2 cached?
       if: steps.linux-SDL2-ID-external-cache5.outputs.cache-hit == 'true'
@@ -88,22 +87,21 @@ jobs:
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@master
 
-    - name: Has SDL2 been downloaded from remote repo?
-      shell: bash
-      run: |
-        if [[ -d External/SDL2 ]]; then
-          mkdir -p External/SDL2
-          echo directory exists!
-        else
-          echo directory does not exist!
-        fi
-
     - name: Cache SDL2
       id: mac-SDL2-ID-external-cache5
       uses: actions/cache@v3
       with:
         path: External/SDL2
         key: mac-SDL2-KEY-external-cache5
+
+    - name: Has SDL2 been downloaded from remote repo?
+      shell: bash
+      run: |
+        if [[ -d External/SDL2 ]]; then
+          echo directory exists!
+        else
+          echo directory does not exist!
+        fi
 
     - name: Is SDL2 cached?
       if: steps.mac-SDL2-ID-external-cache5.outputs.cache-hit == 'true'
@@ -157,22 +155,21 @@ jobs:
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@master
 
-    - name: Has SDL2 been downloaded from remote repo?
-      shell: bash
-      run: |
-        if [[ -d External/SDL2 ]]; then
-          mkdir -p External/SDL2
-          echo directory exists!
-        else
-          echo directory does not exist!
-        fi
-
     - name: Cache SDL2
       id: windows-SDL2-ID-external-cache5
       uses: actions/cache@v3
       with:
         path: External/SDL2
         key: windows-SDL2-KEY-external-cache5
+
+    - name: Has SDL2 been downloaded from remote repo?
+      shell: bash
+      run: |
+        if [[ -d External/SDL2 ]]; then
+          echo directory exists!
+        else
+          echo directory does not exist!
+        fi
 
     - name: Is SDL2 cached?
       if: steps.windows-SDL2-ID-external-cache5.outputs.cache-hit == 'true'
