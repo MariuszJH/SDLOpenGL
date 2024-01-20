@@ -49,6 +49,27 @@ jobs:
           /usr/lib/x86_64-linux-gnu/libpulse-simple.so
           /usr/lib/x86_64-linux-gnu/libpulse.so
           /usr/include/sndio.h
+          /usr/include/dbus-1.0/dbus
+          /usr/lib/x86_64-linux-gnu/cmake/DBus1
+          /usr/lib/x86_64-linux-gnu/dbus-1.0/include/dbus
+          /usr/lib/x86_64-linux-gnu/libdbus-1.a
+          /usr/lib/x86_64-linux-gnu/libdbus-1.so
+          /usr/include/libdecor-0/libdecor.h
+          /usr/lib/x86_64-linux-gnu/libdecor-0.so
+          /usr/include/libdrm
+          /usr/include/libsync.h
+          /usr/include/xf86drm.h
+          /usr/include/xf86drmMode.h
+          /usr/lib/x86_64-linux-gnu/libdrm.a
+          /usr/lib/x86_64-linux-gnu/libdrm_amdgpu.a
+          /usr/lib/x86_64-linux-gnu/libdrm_intel.a
+          /usr/lib/x86_64-linux-gnu/libdrm_nouveau.a
+          /usr/lib/x86_64-linux-gnu/libdrm_radeon.a
+          /usr/lib/x86_64-linux-gnu/libdrm.so
+          /usr/lib/x86_64-linux-gnu/libdrm_amdgpu.so
+          /usr/lib/x86_64-linux-gnu/libdrm_intel.so
+          /usr/lib/x86_64-linux-gnu/libdrm_nouveau.so
+          /usr/lib/x86_64-linux-gnu/libdrm_radeon.so
         key: linux-SDL2-KEY-installed-cache1
 
     - name: Is SDL2 not yet cached? Install SDL2
