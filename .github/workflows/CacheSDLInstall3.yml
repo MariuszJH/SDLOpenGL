@@ -23,10 +23,54 @@ jobs:
     - name: Grant tar root ownership and execution (needed to untar cached objects)
       run: sudo chown root /usr/bin/tar && sudo chmod u+s /usr/bin/tar
 
-    - name: Install SDL2 and show its dependencies
+    - name: Cache SDL2
+      id: linux-SDL2-ID-installed-cache1
+      uses: actions/cache@v3
+      with:
+        path: |
+          /usr/include/SDL2
+          /usr/include/x86_64-linux-gnu/SDL2
+          /usr/lib/x86_64-linux-gnu/libSDL2*
+          /usr/lib/x86_64-linux-gnu/cmake/SDL2
+          /usr/lib/x86_64-linux-gnu/libOpenGL.so.0.0.0
+          /usr/lib/x86_64-linux-gnu/libOpenGL.so.0
+          /usr/include/alsa
+          /usr/include/asoundlib.h
+          /usr/include/sys/asoundlib.h
+          /usr/lib/x86_64-linux-gnu/libasound.so
+          /usr/include/GL/gl.h
+          /usr/include/GL/glcorearb.h
+          /usr/include/GL/glext.h
+          /usr/include/KHR/khrplatform.h
+          /usr/lib/x86_64-linux-gnu/libGL.so
+        # /usr/include/pulse
+        # /usr/lib/x86_64-linux-gnu/cmake/PulseAudio
+        # /usr/lib/x86_64-linux-gnu/libpulse-mainloop-glib.so
+        # /usr/lib/x86_64-linux-gnu/libpulse-simple.so
+        # /usr/lib/x86_64-linux-gnu/libpulse.so
+        # /usr/include/sndio.h
+        key: linux-SDL2-KEY-installed-cache1
+
+    - name: Is SDL2 not yet cached? Install SDL2
+      if: steps.linux-SDL2-ID-installed-cache1.outputs.cache-hit != 'true'
       run: |
         echo sudo apt-get install --yes libsdl2-dev
         sudo apt-get install --yes libsdl2-dev
+
+        echo NOT yet cached! Find in /usr
+        find /usr/include -iname SDL.h
+        find /usr/lib/x86_64-linux-gnu -iname libSDL2.a
+        find /usr/lib/x86_64-linux-gnu -iname libSDL2.so
+        find /usr/lib/x86_64-linux-gnu/cmake/SDL2 -iname SDL2?Config.cmake
+
+    - name: Is SDL2 cached? Do not install SDL2!
+      if: steps.linux-SDL2-ID-installed-cache1.outputs.cache-hit == 'true'
+      run: |
+        echo YES cached! Find in /usr
+        find /usr/include -iname SDL.h
+        find /usr/lib/x86_64-linux-gnu -iname libSDL2.a
+        find /usr/lib/x86_64-linux-gnu -iname libSDL2.so
+        find /usr/lib/x86_64-linux-gnu/cmake/SDL2 -iname SDL2?Config.cmake
 
     - name: Show dependencies of SDL2
       run: |
@@ -73,16 +117,6 @@ jobs:
           echo Caching "$package"
           sudo dpkg -L "$package" | while IFS= read -r f; do if test -f $f; then echo $f; fi; done
         done
-
-    # - name: Cache SDL2
-    #   id: linux-SDL2-ID-installed-cache1
-    #   uses: actions/cache@v3
-    #   with:
-    #     path: |
-    #       /usr/include/SDL2
-    #       /usr/lib/x86_64-linux-gnu/libSDL2*
-    #       /usr/lib/x86_64-linux-gnu/cmake/SDL2
-    #     key: linux-SDL2-KEY-installed-cache1
 
     # - name: Is SDL2 cached? Do not install SDL2!
     #   if: steps.linux-SDL2-ID-installed-cache1.outputs.cache-hit == 'true'
@@ -168,12 +202,12 @@ jobs:
     #     find /usr/ -iname libSDL2.so
     #     find /usr/ -iname SDL2?Config.cmake
         
-    # - name: CMake configure --- Ninja, Gnu, Debug
-    #   run: |
-    #     echo cmake --preset Ninja-Gnu-Debug
-    #     cmake --preset Ninja-Gnu-Debug
+    - name: CMake configure --- Ninja, Gnu, Debug
+      run: |
+        echo cmake --preset Ninja-Gnu-Debug
+        cmake --preset Ninja-Gnu-Debug
 
-    # - name: CMake build --- Ninja, Gnu, Debug
-    #   run: |
-    #     echo cmake --build --preset Ninja-Gnu-Debug
-    #     cmake --build  --preset Ninja-Gnu-Debug
+    - name: CMake build --- Ninja, Gnu, Debug
+      run: |
+        echo cmake --build --preset Ninja-Gnu-Debug
+        cmake --build  --preset Ninja-Gnu-Debug
