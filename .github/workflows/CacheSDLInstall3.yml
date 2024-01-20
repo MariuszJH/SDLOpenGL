@@ -70,6 +70,22 @@ jobs:
           /usr/lib/x86_64-linux-gnu/libdrm_intel.so
           /usr/lib/x86_64-linux-gnu/libdrm_nouveau.so
           /usr/lib/x86_64-linux-gnu/libdrm_radeon.so
+          /usr/include/EGL/eglext_angle.h
+          /usr/include/EGL/eglmesaext.h
+          /usr/include/gbm.h
+          /usr/lib/x86_64-linux-gnu/libgbm.so
+          /usr/include/GLES
+          /usr/include/GLES2
+          /usr/include/GLES3
+          /usr/lib/x86_64-linux-gnu/libGLESv1_CM.so
+          /usr/lib/x86_64-linux-gnu/libGLESv2.so
+          /usr/include/GL/glu.h
+          /usr/lib/x86_64-linux-gnu/libGLU.a
+          /usr/lib/x86_64-linux-gnu/libGLU.so
+          /usr/include/ibus-1.0
+          /usr/lib/x86_64-linux-gnu/libibus-1.0.so
+          /usr/include/libudev.h
+          /usr/lib/x86_64-linux-gnu/libudev.so
         key: linux-SDL2-KEY-installed-cache1
 
     - name: Is SDL2 not yet cached? Install SDL2
