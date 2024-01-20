@@ -33,14 +33,14 @@ jobs:
 
     - name: Cache SDL2
       if: ${{env.externalProjectDir == 'existsYes'}}
-      id: linux-SDL2-ID-external-cache3
+      id: linux-SDL2-ID-external-cache4a
       uses: actions/cache@v3
       with:
         path: External/SDL2
-        key: linux-SDL2-KEY-external-cache3
+        key: linux-SDL2-KEY-external-cache4
 
     - name: Is SDL2 cached?
-      if: steps.linux-SDL2-ID-external-cache3.outputs.cache-hit == 'true'
+      if: steps.linux-SDL2-ID-external-cache4a.outputs.cache-hit == 'true'
       run: |
         echo YES cached!
         find External/SDL2 -iname SDL.h
@@ -49,7 +49,7 @@ jobs:
         find External/SDL2 -iname SDL2?Config.cmake
 
     - name: Is SDL2 not yet cached?
-      if: steps.linux-SDL2-ID-external-cache3.outputs.cache-hit != 'true'
+      if: steps.linux-SDL2-ID-external-cache4a.outputs.cache-hit != 'true'
       run: |
         echo NO not yet cached!
         ls External
@@ -79,14 +79,14 @@ jobs:
 
     - name: Cache SDL2 again
       if: ${{env.externalProjectDir == 'existsYes'}}
-      id: linux-SDL2-ID-external-cache3b
+      id: linux-SDL2-ID-external-cache4b
       uses: actions/cache@v3
       with:
         path: External/SDL2
-        key: linux-SDL2-KEY-external-cache3
+        key: linux-SDL2-KEY-external-cache4
 
     - name: Is SDL2 cached?
-      if: steps.linux-SDL2-ID-external-cache3b.outputs.cache-hit == 'true'
+      if: steps.linux-SDL2-ID-external-cache4b.outputs.cache-hit == 'true'
       run: |
         echo YES cached!
         find External/SDL2 -iname SDL.h
@@ -95,7 +95,7 @@ jobs:
         find External/SDL2 -iname SDL2?Config.cmake
 
     - name: Is SDL2 not yet cached?
-      if: steps.linux-SDL2-ID-external-cache3b.outputs.cache-hit != 'true'
+      if: steps.linux-SDL2-ID-external-cache4b.outputs.cache-hit != 'true'
       run: |
         echo NO not yet cached!
         ls External
@@ -135,14 +135,14 @@ jobs:
 
     - name: Cache SDL2
       if: ${{env.externalProjectDir == 'existsYes'}}
-      id: mac-SDL2-ID-external-cache3
+      id: mac-SDL2-ID-external-cache4a
       uses: actions/cache@v3
       with:
         path: External/SDL2
-        key: mac-SDL2-KEY-external-cache3
+        key: mac-SDL2-KEY-external-cache4
 
     - name: Is SDL2 cached?
-      if: steps.mac-SDL2-ID-external-cache3.outputs.cache-hit == 'true'
+      if: steps.mac-SDL2-ID-external-cache4a.outputs.cache-hit == 'true'
       run: |
         echo YES cached!
         find External/SDL2 -iname SDL.h
@@ -158,7 +158,7 @@ jobs:
       # ls External/SDL2/2.28.5/lib/cmake/SDL2
 
     - name: Is SDL2 not yet cached?
-      if: steps.mac-SDL2-ID-external-cache3.outputs.cache-hit != 'true'
+      if: steps.mac-SDL2-ID-external-cache4a.outputs.cache-hit != 'true'
       run: |
         echo NO not yet cached!
         ls External
@@ -188,14 +188,14 @@ jobs:
 
     - name: Cache SDL2 again!
       if: ${{env.externalProjectDir == 'existsYes'}}
-      id: mac-SDL2-ID-external-cache3b
+      id: mac-SDL2-ID-external-cache4b
       uses: actions/cache@v3
       with:
         path: External/SDL2
-        key: mac-SDL2-KEY-external-cache3
+        key: mac-SDL2-KEY-external-cache4
 
     - name: Is SDL2 cached?
-      if: steps.mac-SDL2-ID-external-cache3b.outputs.cache-hit == 'true'
+      if: steps.mac-SDL2-ID-external-cache4b.outputs.cache-hit == 'true'
       run: |
         echo YES cached!
         find External/SDL2 -iname SDL.h
@@ -211,7 +211,7 @@ jobs:
       # ls External/SDL2/2.28.5/lib/cmake/SDL2
 
     - name: Is SDL2 not yet cached?
-      if: steps.mac-SDL2-ID-external-cache3b.outputs.cache-hit != 'true'
+      if: steps.mac-SDL2-ID-external-cache4b.outputs.cache-hit != 'true'
       run: |
         echo NO not yet cached!
         ls External
@@ -227,6 +227,7 @@ jobs:
       run: |
         echo cmake --build --preset Ninja-Clang-Release
         cmake --build --preset Ninja-Clang-Release
+
 
   build-on-windows:
     runs-on: windows-latest
@@ -253,14 +254,14 @@ jobs:
 
     - name: Cache SDL2
       if: ${{env.externalProjectDir == 'existsYes'}}
-      id: windows-SDL2-ID-external-cache3
+      id: windows-SDL2-ID-external-cache4a
       uses: actions/cache@v3
       with:
         path: External/SDL2
-        key: windows-SDL2-KEY-external-cache3
+        key: windows-SDL2-KEY-external-cache4
 
     - name: Is SDL2 cached?
-      if: steps.windows-SDL2-ID-external-cache3.outputs.cache-hit == 'true'
+      if: steps.windows-SDL2-ID-external-cache4a.outputs.cache-hit == 'true'
       run: |
         echo YES cached!
         find External/SDL2 -iname SDL.h
@@ -278,7 +279,7 @@ jobs:
       # ls External/SDL2/SDL2-2.28.5/cmake -Name
 
     - name: Is SDL2 not yet cached?
-      if: steps.windows-SDL2-ID-external-cache3.outputs.cache-hit != 'true'
+      if: steps.windows-SDL2-ID-external-cache4a.outputs.cache-hit != 'true'
       run: |
         echo NO not yet cached!
         ls External
@@ -308,14 +309,14 @@ jobs:
 
     - name: Cache SDL2 again!
       if: ${{env.externalProjectDir == 'existsYes'}}
-      id: windows-SDL2-ID-external-cache3b
+      id: windows-SDL2-ID-external-cache4b
       uses: actions/cache@v3
       with:
         path: External/SDL2
-        key: windows-SDL2-KEY-external-cache3
+        key: windows-SDL2-KEY-external-cache4
 
     - name: Is SDL2 cached?
-      if: steps.windows-SDL2-ID-external-cache3b.outputs.cache-hit == 'true'
+      if: steps.windows-SDL2-ID-external-cache4b.outputs.cache-hit == 'true'
       run: |
         echo YES cached!
         find External/SDL2 -iname SDL.h
@@ -333,7 +334,7 @@ jobs:
       # ls External/SDL2/SDL2-2.28.5/cmake -Name
 
     - name: Is SDL2 not yet cached?
-      if: steps.windows-SDL2-ID-external-cache3b.outputs.cache-hit != 'true'
+      if: steps.windows-SDL2-ID-external-cache4b.outputs.cache-hit != 'true'
       run: |
         echo NO not yet cached!
         ls External
