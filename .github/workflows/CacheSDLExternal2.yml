@@ -1,0 +1,216 @@
+name: Cache SDL2 External 2
+
+on:
+  push: 
+    branches: [master, develop]
+  pull_request:
+    branches: [master, develop]
+
+env:
+  projectName: SDLOpenGL
+  SDL_VERSION: 2.28.5
+
+jobs:
+  build-on-linux:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@master
+
+    - name: Has SDL2 been downloaded from remote repo?
+      shell: bash
+      run: |
+        if [[ -d External/SDL2 ]]; then
+          mkdir -p External/SDL2
+          echo directory exists!
+        else
+          echo directory does not exist!
+        fi
+
+    - name: Cache SDL2
+      id: linux-SDL2-ID-external-cache5
+      uses: actions/cache@v3
+      with:
+        path: |
+          if [[ -d External/SDL2 ]]; then
+            External/SDL2
+        key: linux-SDL2-KEY-external-cache5
+
+    - name: Is SDL2 cached?
+      if: steps.linux-SDL2-ID-external-cache5.outputs.cache-hit == 'true'
+      run: |
+        echo YES cached!
+        find External/SDL2 -iname SDL.h
+        find External/SDL2 -iname libSDL2.a
+        find External/SDL2 -iname libSDL2.so
+        find External/SDL2 -iname SDL2?Config.cmake
+
+    - name: Is SDL2 not yet cached?
+      if: steps.linux-SDL2-ID-external-cache5.outputs.cache-hit != 'true'
+      run: |
+        echo NO not yet cached!
+        ls External
+
+    - name: CMake configure --- Ninja, Gnu, Debug
+      run: |
+        echo cmake --preset Ninja-Gnu-Debug
+        cmake --preset Ninja-Gnu-Debug
+        echo ls External/SDL2
+        ls External/SDL2
+
+    - name: CMake build --- Ninja, Gnu, Debug
+      run: |
+        echo cmake --build --preset Ninja-Gnu-Debug
+        cmake --build  --preset Ninja-Gnu-Debug
+
+    - name: CMake configure --- Ninja, Gnu, Release
+      run: |
+        echo cmake --preset Ninja-Gnu-Release
+        cmake --preset Ninja-Gnu-Release
+        echo ls External/SDL2
+        ls External/SDL2
+
+    - name: CMake build --- Ninja, Gnu, Release
+      run: |
+        echo cmake --build --preset Ninja-Gnu-Release
+        cmake --build  --preset Ninja-Gnu-Release
+
+
+  build-on-macos:
+    runs-on: macos-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@master
+
+    - name: Has SDL2 been downloaded from remote repo?
+      shell: bash
+      run: |
+        if [[ -d External/SDL2 ]]; then
+          mkdir -p External/SDL2
+          echo directory exists!
+        else
+          echo directory does not exist!
+        fi
+
+    - name: Cache SDL2
+      id: mac-SDL2-ID-external-cache5
+      uses: actions/cache@v3
+      with:
+        path: External/SDL2
+        key: mac-SDL2-KEY-external-cache5
+
+    - name: Is SDL2 cached?
+      if: steps.mac-SDL2-ID-external-cache5.outputs.cache-hit == 'true'
+      run: |
+        echo YES cached!
+        find External/SDL2 -iname SDL.h
+        find External/SDL2 -iname libSDL2.a
+        find External/SDL2 -iname libSDL2.so
+        find External/SDL2 -iname SDL2?Config.cmake
+
+    - name: Is SDL2 not yet cached?
+      if: steps.mac-SDL2-ID-external-cache5.outputs.cache-hit != 'true'
+      run: |
+        echo NO not yet cached!
+        ls External
+
+    - name: CMake configure --- Ninja, Clang, Debug
+      run: |
+        echo cmake --preset Ninja-Clang-Debug
+        cmake --preset Ninja-Clang-Debug
+        echo ls External/SDL2
+        ls External/SDL2
+
+    - name: CMake build --- Ninja, Clang, Debug
+      run: |
+        echo cmake --build --preset Ninja-Clang-Debug
+        cmake --build  --preset Ninja-Clang-Debug
+
+    - name: CMake configure --- Ninja, Clang, Release
+      run: |
+        echo cmake --preset Ninja-Clang-Release
+        cmake --preset Ninja-Clang-Release
+        echo ls External/SDL2
+        ls External/SDL2
+
+    - name: CMake build --- Ninja, Clang, Release
+      run: |
+        echo cmake --build --preset Ninja-Clang-Release
+        cmake --build  --preset Ninja-Clang-Release
+
+
+  build-on-windows:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Setup MSVC compiler
+      uses: ilammy/msvc-dev-cmd@v1
+
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@master
+
+    - name: Has SDL2 been downloaded from remote repo?
+      shell: bash
+      run: |
+        if [[ -d External/SDL2 ]]; then
+          mkdir -p External/SDL2
+          echo directory exists!
+        else
+          echo directory does not exist!
+        fi
+
+    - name: Cache SDL2
+      id: windows-SDL2-ID-external-cache5
+      uses: actions/cache@v3
+      with:
+        path: External/SDL2
+        key: windows-SDL2-KEY-external-cache5
+
+    - name: Is SDL2 cached?
+      if: steps.windows-SDL2-ID-external-cache5.outputs.cache-hit == 'true'
+      shell: bash
+      run: |
+        echo YES cached!
+        find External/SDL2 -iname SDL.h
+        find External/SDL2 -iname libSDL2.a
+        find External/SDL2 -iname libSDL2.so
+        find External/SDL2 -iname SDL2?Config.cmake
+
+    - name: Is SDL2 not yet cached?
+      if: steps.windows-SDL2-ID-external-cache5.outputs.cache-hit != 'true'
+      shell: bash
+      run: |
+        echo NO not yet cached!
+        ls External
+
+    - name: CMake configure --- Ninja, Msvc, Debug
+      run: |
+        echo cmake --preset Ninja-Msvc-Debug
+        cmake --preset Ninja-Msvc-Debug
+        echo ls External/SDL2
+        ls External/SDL2
+
+    - name: CMake build --- Ninja, Msvc, Debug
+      run: |
+        echo cmake --build --preset Ninja-Msvc-Debug
+        cmake --build  --preset Ninja-Msvc-Debug
+
+    - name: CMake configure --- Ninja, Msvc, Release
+      run: |
+        echo cmake --preset Ninja-Msvc-Release
+        cmake --preset Ninja-Msvc-Release
+        echo ls External/SDL2
+        ls External/SDL2
+
+    - name: CMake build --- Ninja, Msvc, Release
+      run: |
+        echo cmake --build --preset Ninja-Msvc-Release
+        cmake --build  --preset Ninja-Msvc-Release

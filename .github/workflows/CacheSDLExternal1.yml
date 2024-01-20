@@ -262,6 +262,7 @@ jobs:
 
     - name: Is SDL2 cached?
       if: steps.windows-SDL2-ID-external-cache4a.outputs.cache-hit == 'true'
+      shell: bash
       run: |
         echo YES cached!
         find External/SDL2 -iname SDL.h
@@ -280,6 +281,7 @@ jobs:
 
     - name: Is SDL2 not yet cached?
       if: steps.windows-SDL2-ID-external-cache4a.outputs.cache-hit != 'true'
+      shell: bash
       run: |
         echo NO not yet cached!
         ls External
@@ -317,6 +319,7 @@ jobs:
 
     - name: Is SDL2 cached?
       if: steps.windows-SDL2-ID-external-cache4b.outputs.cache-hit == 'true'
+      shell: bash
       run: |
         echo YES cached!
         find External/SDL2 -iname SDL.h
@@ -335,6 +338,7 @@ jobs:
 
     - name: Is SDL2 not yet cached?
       if: steps.windows-SDL2-ID-external-cache4b.outputs.cache-hit != 'true'
+      shell: bash
       run: |
         echo NO not yet cached!
         ls External
