@@ -31,7 +31,6 @@ jobs:
           /usr/include/SDL2
           /usr/lib/x86_64-linux-gnu/*SDL2*
           /usr/lib/x86_64-linux-gnu/cmake/SDL2
-        # /usr/lib/x86_64-linux-gnu/libSDL2.*
         key: linux-SDL2-KEY-installed-cache3
 
     - name: Install SDL2 since it is not yet cached
