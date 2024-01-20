@@ -38,6 +38,7 @@ else()
     set(FETCHCONTENT_QUIET FALSE)
     set(externalProjectDir ${CMAKE_SOURCE_DIR}/External/SDL2)
 
+    # This assumes that externalProjectDir is not empty and contains all sources downloaded in the 'else' clause
     if(EXISTS ${externalProjectDir} AND IS_DIRECTORY ${externalProjectDir})
         message(STATUS "Not fetching ${packageName} again since it's already downloaded locally into ${externalProjectDir}")
 
