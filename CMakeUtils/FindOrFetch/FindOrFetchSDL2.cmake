@@ -13,7 +13,7 @@ if (WIN32)
     # set(packageVersion 2.28.3)
     set(${packageName}_DIR C:/SDL2/SDL2-2.28.5/cmake)
 elseif(LINUX)
-    # set(${packageName}_DIR /usr/lib/x86_64-linux-gnu/cmake/SDL2)
+    set(${packageName}_DIR /usr/lib/x86_64-linux-gnu/cmake/SDL2)
     set(packageVersion 2.0.20...2.28.5)
     # set(${packageName}_DIR /usr/lib64/cmake/SDL2)
     # set(packageVersion 2.26.3)
@@ -26,7 +26,7 @@ elseif(UNIX AND NOT APPLE)
 endif()
 
 # Omit REQUIRED keyword so as to be able to fetch the package if it is not installed
-# find_package(${packageName} ${packageVersion})
+find_package(${packageName} ${packageVersion})
 
 if(${packageName}_FOUND)
     message(STATUS "${packageName}_FOUND: ${${packageName}_FOUND}")
