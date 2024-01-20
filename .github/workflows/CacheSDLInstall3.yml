@@ -43,12 +43,12 @@ jobs:
           /usr/include/GL/glext.h
           /usr/include/KHR/khrplatform.h
           /usr/lib/x86_64-linux-gnu/libGL.so
-        # /usr/include/pulse
-        # /usr/lib/x86_64-linux-gnu/cmake/PulseAudio
-        # /usr/lib/x86_64-linux-gnu/libpulse-mainloop-glib.so
-        # /usr/lib/x86_64-linux-gnu/libpulse-simple.so
-        # /usr/lib/x86_64-linux-gnu/libpulse.so
-        # /usr/include/sndio.h
+          /usr/include/pulse
+          /usr/lib/x86_64-linux-gnu/cmake/PulseAudio
+          /usr/lib/x86_64-linux-gnu/libpulse-mainloop-glib.so
+          /usr/lib/x86_64-linux-gnu/libpulse-simple.so
+          /usr/lib/x86_64-linux-gnu/libpulse.so
+          /usr/include/sndio.h
         key: linux-SDL2-KEY-installed-cache1
 
     - name: Is SDL2 not yet cached? Install SDL2
