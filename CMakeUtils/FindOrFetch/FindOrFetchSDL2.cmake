@@ -37,22 +37,21 @@ else()
     include(FetchContent)
     set(FETCHCONTENT_QUIET FALSE)
     set(externalProjectDir ${CMAKE_SOURCE_DIR}/External/SDL2)
+    set(externalProjectUrl https://github.com/libsdl-org/SDL.git)
 
     # This assumes that externalProjectDir is not empty and contains all sources downloaded in the 'else' clause
     if(EXISTS ${externalProjectDir} AND IS_DIRECTORY ${externalProjectDir})
-        message(STATUS "Not fetching ${packageName} again since it's already downloaded locally into ${externalProjectDir}")
+        message(STATUS "Not fetching ${packageName} again from ${externalProjectUrl} since it's already downloaded locally into ${externalProjectDir}")
 
         FetchContent_Declare(sdl2
             SOURCE_DIR      ${externalProjectDir}
-            GIT_PROGRESS    TRUE
-            USES_TERMINAL_DOWNLOAD TRUE   # <---- only used by Ninja generator
         )
 
     else()
-        message(STATUS "Fetching ${packageName} from remote repo ...")
+        message(STATUS "Fetching ${packageName} from remote repo: ${externalProjectUrl}")
 
         FetchContent_Declare(sdl2
-            GIT_REPOSITORY  https://github.com/libsdl-org/SDL.git
+            GIT_REPOSITORY  ${externalProjectUrl}
             GIT_TAG         SDL2 # release2-28.3
             SOURCE_DIR      ${externalProjectDir}
             GIT_PROGRESS    TRUE
