@@ -20,7 +20,7 @@ jobs:
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@master
 
-    - name: CMake fetch SDL2 into External/SDL2 and cache it OR ELSE restore it from cache without fetching again
+    - name: CMake fetch SDL2 into External/SDL2 and cache it or else restore it from cache without fetching again
       id: linux-SDL2-ID-external-cache5
       uses: actions/cache@v3
       with:
@@ -85,7 +85,7 @@ jobs:
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@master
 
-    - name: CMake fetch SDL2 into External/SDL2 and cache it OR ELSE restore it from cache without fetching again
+    - name: CMake fetch SDL2 into External/SDL2 and cache it or else restore it from cache without fetching again
       id: mac-SDL2-ID-external-cache5
       uses: actions/cache@v3
       with:
@@ -153,7 +153,7 @@ jobs:
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@master
 
-    - name: CMake fetch SDL2 into External/SDL2 and cache it OR ELSE restore it from cache without fetching again
+    - name: CMake fetch SDL2 into External/SDL2 and cache it or else restore it from cache without fetching again
       id: windows-SDL2-ID-external-cache5
       uses: actions/cache@v3
       with:
