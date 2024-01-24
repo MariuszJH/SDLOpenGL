@@ -84,9 +84,10 @@ jobs:
           ls /usr/lib/x86_64-linux-gnu/cmake/SDL2
 
     - name: Install SDL2 on Mac if it is not yet cached
-      if: steps.mac-SDL2-ID-installed-cache1.outputs.cache-hit != 'true'
-      # if: ${{matrix.os == 'macos-latest'}}
+      # if: steps.mac-SDL2-ID-installed-cache1.outputs.cache-hit != 'true'
+      if: ${{matrix.os == 'macos-latest'}}
       run: |
+        if [[ steps.mac-SDL2-ID-installed-cache1.outputs.cache-hit != 'true' ]]
           echo brew install sdl2
           brew install sdl2
 
@@ -101,6 +102,9 @@ jobs:
           ls /usr/local/Cellar/sdl2/2.28.5/lib
           echo ls /usr/local/Cellar/sdl2/2.28.5/lib/cmake/SDL2
           ls /usr/local/Cellar/sdl2/2.28.5/lib/cmake/SDL2
+        elif
+          echo nothing to do here (Mac)
+        fi
 
     - name: Restore SDL2 on Mac from cache; do not reinstall it!
       if: steps.mac-SDL2-ID-installed-cache1.outputs.cache-hit == 'true'
@@ -167,30 +171,34 @@ jobs:
         key: windows-SDL2-KEY-installed-cache1
 
     - name: Install SDL2 on Windows if it is not yet cached
-      if: steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit != 'true'
-      # if: ${{matrix.os == 'windows-latest'}}
+      # if: steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit != 'true'
+      if: ${{matrix.os == 'windows-latest'}}
       shell: powershell
       run: |
-        Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
-        Expand-Archive C:\SDL.zip -DestinationPath C:\SDL2
-        
-        Write-Host ls C:\SDL2 -Include SDL.h -Recurse -Name
-        ls C:\SDL2 -Include SDL.h -Recurse -Name
-        Write-Host ls C:\SDL2 -Include SDL2.lib -Recurse -Name
-        ls C:\SDL2 -Include SDL2.lib -Recurse -Name
-        Write-Host ls C:\SDL2 -Include SDL2.dll -Recurse -Name
-        ls C:\SDL2 -Include SDL2.dll -Recurse -Name
-        Write-Host ls C:\SDL2 -Include SDL2?Config.cmake -Recurse -Name
-        ls C:\SDL2 -Include SDL2?Config.cmake -Recurse -Name
+        if [[ steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit != 'true' ]]
+          Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
+          Expand-Archive C:\SDL.zip -DestinationPath C:\SDL2
+          
+          Write-Host ls C:\SDL2 -Include SDL.h -Recurse -Name
+          ls C:\SDL2 -Include SDL.h -Recurse -Name
+          Write-Host ls C:\SDL2 -Include SDL2.lib -Recurse -Name
+          ls C:\SDL2 -Include SDL2.lib -Recurse -Name
+          Write-Host ls C:\SDL2 -Include SDL2.dll -Recurse -Name
+          ls C:\SDL2 -Include SDL2.dll -Recurse -Name
+          Write-Host ls C:\SDL2 -Include SDL2?Config.cmake -Recurse -Name
+          ls C:\SDL2 -Include SDL2?Config.cmake -Recurse -Name
 
-        Write-Host ls C:\SDL2\SDL2-2.28.5\include -Name
-        ls C:\SDL2\SDL2-2.28.5\include -Name
-        Write-Host ls C:\SDL2\SDL2-2.28.5\lib\x86 -Name
-        ls C:\SDL2\SDL2-2.28.5\lib\x86 -Name
-        Write-Host ls C:\SDL2\SDL2-2.28.5\lib\x64 -Name
-        ls C:\SDL2\SDL2-2.28.5\lib\x64 -Name
-        Write-Host ls C:\SDL2\SDL2-2.28.5\cmake -Name
-        ls C:\SDL2\SDL2-2.28.5\cmake -Name
+          Write-Host ls C:\SDL2\SDL2-2.28.5\include -Name
+          ls C:\SDL2\SDL2-2.28.5\include -Name
+          Write-Host ls C:\SDL2\SDL2-2.28.5\lib\x86 -Name
+          ls C:\SDL2\SDL2-2.28.5\lib\x86 -Name
+          Write-Host ls C:\SDL2\SDL2-2.28.5\lib\x64 -Name
+          ls C:\SDL2\SDL2-2.28.5\lib\x64 -Name
+          Write-Host ls C:\SDL2\SDL2-2.28.5\cmake -Name
+          ls C:\SDL2\SDL2-2.28.5\cmake -Name
+        else
+          echo nothing to do here (Windows)
+        fi
 
     - name: Restore SDL2 on Windows from cache; do not reinstall it!
       if: steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit == 'true'
