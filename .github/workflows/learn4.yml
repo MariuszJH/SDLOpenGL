@@ -87,7 +87,7 @@ jobs:
       # if: steps.mac-SDL2-ID-installed-cache1.outputs.cache-hit != 'true'
       if: ${{matrix.os == 'macos-latest'}}
       run: |
-        if [[ steps.mac-SDL2-ID-installed-cache1.outputs.cache-hit != 'true' ]]; then
+        if [[ ${{steps.mac-SDL2-ID-installed-cache1.outputs.cache-hi}}t != 'true' ]]; then
           echo brew install sdl2
           brew install sdl2
 
@@ -102,8 +102,6 @@ jobs:
           ls /usr/local/Cellar/sdl2/2.28.5/lib
           echo ls /usr/local/Cellar/sdl2/2.28.5/lib/cmake/SDL2
           ls /usr/local/Cellar/sdl2/2.28.5/lib/cmake/SDL2
-        else
-          echo nothing to do here (Mac)
         fi
 
     - name: Restore SDL2 on Mac from cache; do not reinstall it!
@@ -176,7 +174,7 @@ jobs:
       if: ${{matrix.os == 'windows-latest'}}
       shell: powershell
       run: |
-        if [[ steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit != 'true' ]]; then
+        if [[ ${{steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit}} != 'true' ]]; then
           Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
           Expand-Archive C:\SDL.zip -DestinationPath C:\SDL2
           
@@ -197,8 +195,6 @@ jobs:
           ls C:\SDL2\SDL2-2.28.5\lib\x64 -Name
           Write-Host ls C:\SDL2\SDL2-2.28.5\cmake -Name
           ls C:\SDL2\SDL2-2.28.5\cmake -Name
-        else
-          echo "nothing to do here (Windows)"
         fi
 
     - name: Restore SDL2 on Windows from cache; do not reinstall it!
