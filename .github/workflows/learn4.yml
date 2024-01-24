@@ -176,7 +176,7 @@ jobs:
       if: ${{matrix.os == 'windows-latest'}}
       shell: powershell
       run: |
-        if ( ${{steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit}}) {
+        if ( steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit ) {
           Write-Host empty
         } else {
           Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
