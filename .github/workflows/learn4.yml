@@ -103,7 +103,7 @@ jobs:
           echo ls /usr/local/Cellar/sdl2/2.28.5/lib/cmake/SDL2
           ls /usr/local/Cellar/sdl2/2.28.5/lib/cmake/SDL2
         elif
-          echo nothing to do here (Mac)
+          echo nothing
         fi
 
     - name: Restore SDL2 on Mac from cache; do not reinstall it!
@@ -198,7 +198,7 @@ jobs:
           Write-Host ls C:\SDL2\SDL2-2.28.5\cmake -Name
           ls C:\SDL2\SDL2-2.28.5\cmake -Name
         else
-          echo nothing to do here (Windows)
+          echo "nothing to do here (Windows)"
         fi
 
     - name: Restore SDL2 on Windows from cache; do not reinstall it!
