@@ -56,8 +56,8 @@ jobs:
       run: |
           echo sudo apt-get update
           sudo apt-get update
-          echo sudo apt-get install libsdl2-dev --fix-missing
-          sudo apt-get install libsdl2-dev --fix-missing
+          echo sudo apt-get install libsdl2-dev
+          sudo apt-get install libsdl2-dev
 
           echo find /usr/include/SDL2 -iname SDL.h
           find /usr/include/SDL2 -iname SDL.h
