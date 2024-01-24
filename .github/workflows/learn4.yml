@@ -87,7 +87,7 @@ jobs:
       # if: steps.mac-SDL2-ID-installed-cache1.outputs.cache-hit != 'true'
       if: ${{matrix.os == 'macos-latest'}}
       run: |
-        if [[ ${{steps.mac-SDL2-ID-installed-cache1.outputs.cache-hi}}t != 'true' ]]; then
+        if [[ ${{steps.mac-SDL2-ID-installed-cache1.outputs.cache-hit != 'true'}} == "true" ]]; then
           echo brew install sdl2
           brew install sdl2
 
@@ -174,7 +174,7 @@ jobs:
       if: ${{matrix.os == 'windows-latest'}}
       shell: powershell
       run: |
-        if [[ ${{steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit}} != 'true' ]]; then
+        if [[ ${{steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit != 'true'}} == "true" ]]; then
           Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
           Expand-Archive C:\SDL.zip -DestinationPath C:\SDL2
           
