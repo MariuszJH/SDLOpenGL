@@ -54,6 +54,8 @@ jobs:
     - name: Install SDL2 on Linux if it is not yet cached
       if: ${{matrix.os == 'ubuntu-latest'}}
       run: |
+          echo sudo apt-get update
+          sudo apt-get update
           echo sudo apt-get install libsdl2-dev --fix-missing
           sudo apt-get install libsdl2-dev --fix-missing
 
