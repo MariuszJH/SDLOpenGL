@@ -174,32 +174,31 @@ jobs:
     - name: Install SDL2 on Windows if it is not yet cached
       # if: steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit != 'true'
       if: ${{matrix.os == 'windows-latest'}}
-      shell: powershell
+      shell: bash
       run: |
-        if ( {{steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit}} ) {
-          Write-Host empty
-        } else {
-          Invoke-WebRequest "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip" -o C:\SDL.zip
-          Expand-Archive C:\SDL.zip -DestinationPath C:\SDL2
+        if [[ ${{steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit != 'true'}} == "true" ]]; then
+          echo unzipping
+          curl -o SDL.zip "https://github.com/libsdl-org/SDL/releases/download/release-$env:SDL_VERSION/SDL2-devel-$env:SDL_VERSION-VC.zip"
+          unzip SDL.zip -d ~/SDL2
           
-          Write-Host ls C:\SDL2 -Include SDL.h -Recurse -Name
+          echo ls C:\SDL2 -Include SDL.h -Recurse -Name
           ls C:\SDL2 -Include SDL.h -Recurse -Name
-          Write-Host ls C:\SDL2 -Include SDL2.lib -Recurse -Name
+          echo ls C:\SDL2 -Include SDL2.lib -Recurse -Name
           ls C:\SDL2 -Include SDL2.lib -Recurse -Name
-          Write-Host ls C:\SDL2 -Include SDL2.dll -Recurse -Name
+          echo ls C:\SDL2 -Include SDL2.dll -Recurse -Name
           ls C:\SDL2 -Include SDL2.dll -Recurse -Name
-          Write-Host ls C:\SDL2 -Include SDL2?Config.cmake -Recurse -Name
+          echo ls C:\SDL2 -Include SDL2?Config.cmake -Recurse -Name
           ls C:\SDL2 -Include SDL2?Config.cmake -Recurse -Name
 
-          Write-Host ls C:\SDL2\SDL2-2.28.5\include -Name
+          echo ls C:\SDL2\SDL2-2.28.5\include -Name
           ls C:\SDL2\SDL2-2.28.5\include -Name
-          Write-Host ls C:\SDL2\SDL2-2.28.5\lib\x86 -Name
+          echo ls C:\SDL2\SDL2-2.28.5\lib\x86 -Name
           ls C:\SDL2\SDL2-2.28.5\lib\x86 -Name
-          Write-Host ls C:\SDL2\SDL2-2.28.5\lib\x64 -Name
+          echo ls C:\SDL2\SDL2-2.28.5\lib\x64 -Name
           ls C:\SDL2\SDL2-2.28.5\lib\x64 -Name
-          Write-Host ls C:\SDL2\SDL2-2.28.5\cmake -Name
+          echo ls C:\SDL2\SDL2-2.28.5\cmake -Name
           ls C:\SDL2\SDL2-2.28.5\cmake -Name
-        }
+        fi
 
     - name: Restore SDL2 on Windows from cache; do not reinstall it!
       if: steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit == 'true'
