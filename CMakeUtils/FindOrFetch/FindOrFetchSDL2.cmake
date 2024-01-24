@@ -39,7 +39,7 @@ else()
     set(externalProjectDir ${CMAKE_SOURCE_DIR}/External/SDL2)
     set(externalProjectUrl https://github.com/libsdl-org/SDL.git)
 
-    # This assumes that externalProjectDir is not empty and contains all sources downloaded in the 'else' clause
+    # This 'if' assumes that externalProjectDir is not empty and contains all sources downloaded in the 'else' clause
     if(EXISTS ${externalProjectDir} AND IS_DIRECTORY ${externalProjectDir})
         message(STATUS "Not fetching ${packageName} again from ${externalProjectUrl} since it's already downloaded locally into ${externalProjectDir}")
 
