@@ -182,8 +182,8 @@ jobs:
           echo find -name SDL.zip
           find -name SDL.zip
 
-          echo sudo apt install unzip
-          sudo apt install unzip
+          echo sudo apt-get install unzip
+          sudo apt-get install unzip
           echo unzip -v
           unzip -v
           
