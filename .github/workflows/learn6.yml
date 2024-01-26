@@ -50,7 +50,7 @@ jobs:
       uses: seanmiddleditch/gha-setup-ninja@master
 
 # LINUX: Do not cache SDL2 on Linux because it is tied to too many dependencies which would also need to be cached 
-    - name: Install SDL2 on Linux if it is not yet cached
+    - name: Install SDL2 on Linux
       if: ${{matrix.os == 'ubuntu-latest'}}
       run: |
           echo sudo apt-get update
@@ -85,7 +85,7 @@ jobs:
         key: mac-SDL2-KEY-installed-cache1
 
     - name: Install SDL2 on Mac if it is not yet cached
-      if: ${{ (matrix.os == 'macos-latest') && (steps.mac-SDL2-ID-installed-cache1.outputs.cache-hit != 'true') }}
+      if: ${{ (matrix.os == 'macos-latest') && (steps.mac-SDL2-ID-installed-cache1.outputs.cache-hit != "true") }}
       run: |
           echo brew install sdl2
           brew install sdl2
@@ -103,7 +103,7 @@ jobs:
           ls /usr/local/Cellar/sdl2/2.28.5/lib/cmake/SDL2
 
     - name: Restore SDL2 on Mac from cache; do not reinstall it!
-      if: ${{ (matrix.os == 'macos-latest') && (steps.mac-SDL2-ID-installed-cache1.outputs.cache-hit == 'true') }}
+      if: ${{ (matrix.os == 'macos-latest') && (steps.mac-SDL2-ID-installed-cache1.outputs.cache-hit == "true") }}
       run: |
         echo YES cached!
         find /usr/local/Cellar/sdl2 -iname SDL.h
@@ -129,7 +129,7 @@ jobs:
         key: windows-SDL2-KEY-installed-cache1
 
     - name: Install SDL2 on Windows if it is not yet cached
-      if: ${{ (matrix.os == 'windows-latest') && (steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit != 'true') }}
+      if: ${{ (matrix.os == 'windows-latest') && (steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit != "true") }}
       shell: powershell
       run: |
         Write-Host Downloading
@@ -157,7 +157,7 @@ jobs:
         ls C:\SDL2\SDL2-2.28.5\cmake -Name
 
     - name: Restore SDL2 on Windows from cache; do not reinstall it!
-      if: ${{ (matrix.os == 'windows-latest') && (steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit == 'true') }}
+      if: ${{ (matrix.os == 'windows-latest') && (steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit == "true") }}
       shell: powershell
       run: |
         echo YES cached!
