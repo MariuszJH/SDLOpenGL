@@ -81,16 +81,16 @@ jobs:
         echo NO not yet cached!
         ls External
 
-# LINUX: Do not cache SDL2 on Linux which has been installed with apt because it is tied to too many dependencies which would also need to be cached (and that's too difficult)
+# LINUX: Do not cache SDL2 on Linux which has been installed with apt-get because it is tied to too many dependencies which would also need to be cached (and that's too difficult)
     - name: Install SDL2 on Linux with package manager only if it has not been fetched by CMake
-      if: ${{ (matrix.os == 'ubuntu-latest') && (hashFiles('External/SDL2/CMakeLists.txt') == '') }}
+      if: ${{ (matrix.os == 'ubuntu-latest') && (hashFiles('External/SDL2/CMakeLists.txt') == '') && (steps.SDL2-ID-external-cache1.outputs.cache-hit != 'true') }}
       run: |
-          echo sudo apt update
-          sudo apt update
-          echo sudo apt upgrade
-          sudo apt upgrade
-          echo sudo apt install libsdl2-dev
-          sudo apt install libsdl2-dev
+          echo sudo apt-get update
+          sudo apt-get update
+          echo sudo apt-get upgrade
+          sudo apt-get upgrade
+          echo sudo apt-get install libsdl2-dev
+          sudo apt-get install libsdl2-dev
 
           echo find /usr/include/SDL2 -iname SDL.h
           find /usr/include/SDL2 -iname SDL.h
@@ -129,7 +129,7 @@ jobs:
         key: mac-SDL2-KEY-installed-cache1
 
     - name: Install SDL2 on Mac if it is not yet cached
-      if: ${{ (matrix.os == 'macos-latest') && (steps.mac-SDL2-ID-installed-cache1.outputs.cache-hit != 'true') }}
+      if: ${{ (matrix.os == 'macos-latest') && (steps.mac-SDL2-ID-installed-cache1.outputs.cache-hit != 'true') && (steps.SDL2-ID-external-cache1.outputs.cache-hit != 'true') }}
       run: |
           echo brew install sdl2
           brew install sdl2
@@ -173,7 +173,7 @@ jobs:
         key: windows-SDL2-KEY-installed-cache1
 
     - name: Install SDL2 on Windows if it is not yet cached
-      if: ${{ (matrix.os == 'windows-latest') && (steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit != 'true') }}
+      if: ${{ (matrix.os == 'windows-latest') && (steps.windows-SDL2-ID-installed-cache1.outputs.cache-hit != 'true') && (steps.SDL2-ID-external-cache1.outputs.cache-hit != 'true') }}
       shell: powershell
       run: |
         Write-Host Downloading
