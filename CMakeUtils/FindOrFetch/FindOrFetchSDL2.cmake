@@ -40,7 +40,8 @@ else()
     set(externalProjectUrl https://github.com/libsdl-org/SDL.git)
 
     # This 'if' assumes that externalProjectDir is not empty and contains all sources downloaded in the 'else' clause
-    if(EXISTS ${externalProjectDir} AND IS_DIRECTORY ${externalProjectDir})
+    # if(EXISTS ${externalProjectDir} AND IS_DIRECTORY ${externalProjectDir})
+    if(EXISTS ${externalProjectDir}/CMakeLists.txt)
         message(STATUS "Not fetching ${packageName} again from ${externalProjectUrl} since it's already downloaded locally into ${externalProjectDir}")
 
         FetchContent_Declare(sdl2

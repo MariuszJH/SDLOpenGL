@@ -1,4 +1,4 @@
-name: Cache SDL Install or External
+name: Build with CMakePresets.json cache SDL2 install!!
 
 on:
   push: 
@@ -49,14 +49,47 @@ jobs:
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@master
 
-# LINUX: Do not cache SDL2 on Linux because it is tied to too many dependencies which would also need to be cached 
-    - name: Install SDL2 on Linux
-      if: ${{matrix.os == 'ubuntu-latest'}}
+    - name: Cache SDL2 if it has beed fetched by CMake into External/SDL2 or else restore it from cache without fetching again
+      id: SDL2-ID-external-cache1
+      uses: actions/cache@v3
+      with:
+        path: External/SDL2
+        key: SDL2-KEY-external-cache1
+
+    - name: Has SDL2 been downloaded from remote repo?
+      shell: bash
       run: |
-          echo sudo apt-get update
-          sudo apt-get update
-          echo sudo apt-get install libsdl2-dev
-          sudo apt-get install libsdl2-dev
+        if [[ -d External/SDL2 ]]; then
+          echo directory exists!
+        else
+          echo directory does not exist!
+        fi
+
+    - name: Is SDL2 cached?
+      if: steps.SDL2-ID-external-cache1.outputs.cache-hit == 'true'
+      run: |
+        echo YES cached!
+        find External/SDL2 -iname SDL.h
+        find External/SDL2 -iname libSDL2.a
+        find External/SDL2 -iname libSDL2.so
+        find External/SDL2 -iname SDL2?Config.cmake
+
+    - name: Is SDL2 not yet cached?
+      if: steps.SDL2-ID-external-cache1.outputs.cache-hit != 'true'
+      run: |
+        echo NO not yet cached!
+        ls External
+
+# LINUX: Do not cache SDL2 on Linux which has been installed with apt because it is tied to too many dependencies which would also need to be cached (and that's too difficult)
+    - name: Install SDL2 on Linux with package manager only if it has not been fetched by CMake
+      if: ${{ (matrix.os == 'ubuntu-latest') && (hashFiles('External/SDL2/CMakeLists.txt') == '') }}
+      run: |
+          echo sudo apt update
+          sudo apt update
+          echo sudo apt upgrade
+          sudo apt upgrade
+          echo sudo apt install libsdl2-dev
+          sudo apt install libsdl2-dev
 
           echo find /usr/include/SDL2 -iname SDL.h
           find /usr/include/SDL2 -iname SDL.h
@@ -74,36 +107,15 @@ jobs:
           echo ls /usr/lib/x86_64-linux-gnu/cmake/SDL2
           ls /usr/lib/x86_64-linux-gnu/cmake/SDL2
 
-    - name: CMake fetch SDL2 into External/SDL2 and cache it or else restore it from cache without fetching again
-      id: linux-SDL2-ID-external-cache1
-      uses: actions/cache@v3
-      with:
-        path: External/SDL2
-        key: linux-SDL2-KEY-external-cache1
 
+    # This 'if' assumes that External/SDL2/ contains all properly downloaded source files, not just CMakeLists.txt
     - name: Has SDL2 been downloaded from remote repo?
-      shell: bash
-      run: |
-        if [[ -d External/SDL2 ]]; then
-          echo directory exists!
-        else
-          echo directory does not exist!
-        fi
+      if: ${{ hashFiles('External/SDL2/CMakeLists.txt') != '' }}
+      run: echo External/SDL2/CMakeLists.txt exists!
 
-    - name: Is SDL2 cached?
-      if: steps.linux-SDL2-ID-external-cache1.outputs.cache-hit == 'true'
-      run: |
-        echo YES cached!
-        find External/SDL2 -iname SDL.h
-        find External/SDL2 -iname libSDL2.a
-        find External/SDL2 -iname libSDL2.so
-        find External/SDL2 -iname SDL2?Config.cmake
-
-    - name: Is SDL2 not yet cached?
-      if: steps.linux-SDL2-ID-external-cache1.outputs.cache-hit != 'true'
-      run: |
-        echo NO not yet cached!
-        ls External
+    - name: Has SDL2 been not downloaded from remote repo?
+      if: ${{ hashFiles('External/SDL2/CMakeLists.txt') == '' }}
+      run: echo External/SDL2/CMakeLists.txt does not exist!
 
 
 # MAC OS
