@@ -67,6 +67,7 @@ jobs:
 
     - name: Is SDL2 cached in External/SDL2?
       if: steps.SDL2-ID-external-cache1.outputs.cache-hit == 'true'
+      shell: bash
       run: |
         echo YES cached!
         find External/SDL2 -iname SDL.h
