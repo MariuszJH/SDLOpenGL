@@ -65,7 +65,7 @@ jobs:
           echo directory does not exist!
         fi
 
-    - name: Is SDL2 cached?
+    - name: Is SDL2 cached in External/SDL2?
       if: steps.SDL2-ID-external-cache1.outputs.cache-hit == 'true'
       run: |
         echo YES cached!
@@ -74,7 +74,7 @@ jobs:
         find External/SDL2 -iname libSDL2.so
         find External/SDL2 -iname SDL2?Config.cmake
 
-    - name: Is SDL2 not yet cached?
+    - name: Is SDL2 not yet cached in External/SDL2?
       if: steps.SDL2-ID-external-cache1.outputs.cache-hit != 'true'
       run: |
         echo NO not yet cached!
@@ -249,3 +249,4 @@ jobs:
       
     - name: CMake build
       run: cmake --build --preset ${{matrix.preset}}
+
