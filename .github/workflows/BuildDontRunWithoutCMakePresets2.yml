@@ -77,9 +77,12 @@ jobs:
       if: ${{matrix.os == 'windows-latest'}}
       uses: ilammy/msvc-dev-cmd@v1
 
+    # - name: Install Ninja
+    #   uses: seanmiddleditch/gha-setup-ninja@master
     - name: Install Ninja
-      uses: seanmiddleditch/gha-setup-ninja@master
-
+      shell: bash
+      run: ${{ runner.os == 'macOS' && 'brew install ninja' || runner.os == 'Windows' && 'choco install ninja' || 'sudo apt-get install ninja-build' }}
+      
     - name: Cache SDL2 if it has beed fetched by CMake or else restore it from cache without fetching again
       id: ID-SDL2-fetched-cache
       uses: actions/cache@v3
@@ -352,8 +355,11 @@ jobs:
       if: ${{matrix.os == 'windows-latest'}}
       uses: ilammy/msvc-dev-cmd@v1
 
+    # - name: Install Ninja
+    #   uses: seanmiddleditch/gha-setup-ninja@master
     - name: Install Ninja
-      uses: seanmiddleditch/gha-setup-ninja@master
+      shell: bash
+      run: ${{ runner.os == 'macOS' && 'brew install ninja' || runner.os == 'Windows' && 'choco install ninja' || 'sudo apt-get install ninja-build' }}
 
     - name: Cache SDL2 if it has beed fetched by CMake or else restore it from cache without fetching again
       id: ID-SDL2-fetched-cache
@@ -596,8 +602,11 @@ jobs:
       if: ${{matrix.os == 'windows-latest'}}
       uses: ilammy/msvc-dev-cmd@v1
 
+    # - name: Install Ninja
+    #   uses: seanmiddleditch/gha-setup-ninja@master
     - name: Install Ninja
-      uses: seanmiddleditch/gha-setup-ninja@master
+      shell: bash
+      run: ${{ runner.os == 'macOS' && 'brew install ninja' || runner.os == 'Windows' && 'choco install ninja' || 'sudo apt-get install ninja-build' }}
 
     - name: Cache SDL2 if it has beed fetched by CMake or else restore it from cache without fetching again
       id: ID-SDL2-fetched-cache

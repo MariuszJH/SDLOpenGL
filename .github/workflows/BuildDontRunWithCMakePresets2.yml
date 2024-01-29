@@ -90,8 +90,11 @@ jobs:
       if: ${{matrix.os == 'windows-latest'}}
       uses: ilammy/msvc-dev-cmd@v1
         
+    # - name: Install Ninja
+    #   uses: seanmiddleditch/gha-setup-ninja@master
     - name: Install Ninja
-      uses: seanmiddleditch/gha-setup-ninja@master
+      shell: bash
+      run: ${{ runner.os == 'macOS' && 'brew install ninja' || runner.os == 'Windows' && 'choco install ninja' || 'sudo apt-get install ninja-build' }}
 
     - name: Cache SDL2 if it has beed fetched by CMake or else restore it from cache without fetching again
       id: ID-SDL2-fetched-cache
@@ -318,10 +321,6 @@ jobs:
             preset: NinjaMC-Gnu
           - os: macos-latest
             preset: NinjaMC-Msvc
-          # - os: macos-latest
-          #   preset: NMake-Msvc
-          # - os: macos-latest
-          #   preset: Make-Gnu
           - os: macos-latest
             preset: VSx32-Msvc
           - os: macos-latest
@@ -333,10 +332,6 @@ jobs:
             preset: NinjaMC-Gnu
           - os: windows-latest
             preset: NinjaMC-Clang
-          # - os: windows-latest
-          #   preset: Make-Gnu
-          # - os: windows-latest
-          #   preset: Make-Clang
           - os: windows-latest
             preset: Xcode-Clang
         
@@ -350,8 +345,11 @@ jobs:
       if: ${{matrix.os == 'windows-latest'}}
       uses: ilammy/msvc-dev-cmd@v1
         
+    # - name: Install Ninja
+    #   uses: seanmiddleditch/gha-setup-ninja@master
     - name: Install Ninja
-      uses: seanmiddleditch/gha-setup-ninja@master
+      shell: bash
+      run: ${{ runner.os == 'macOS' && 'brew install ninja' || runner.os == 'Windows' && 'choco install ninja' || 'sudo apt-get install ninja-build' }}
 
     - name: Cache SDL2 if it has beed fetched by CMake or else restore it from cache without fetching again
       id: ID-SDL2-fetched-cache
