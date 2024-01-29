@@ -301,14 +301,6 @@ jobs:
         echo buildType = ${{matrix.buildType}}
         echo compiler = ${{matrix.compilerCpp.name}}
 
-    - name: Parameter values
-      shell: bash
-      run: | 
-        echo platform = ${{runner.os}}
-        echo generator = ${{matrix.generator.name}}
-        echo buildType = ${{matrix.buildType}}
-        echo compiler = ${{matrix.compilerCpp.name}}
-
     - name: CMake configure
       run: > 
         cmake -S . 
@@ -332,8 +324,8 @@ jobs:
     #     cmake 
     #     --build ${{matrix.generator.buildDir}}/${{matrix.compilerCpp.buildSubDir}} 
     #     -j8 
-    #     --config ${{matrix.buildType}}
-    #     --target run
+      #     --config ${{matrix.buildType}}
+      #     --target run
 
     - name: Archive build artifacts
       uses: actions/upload-artifact@v3
